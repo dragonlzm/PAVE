@@ -47,7 +47,7 @@ pip install rotary-embedding-torch
 pip install icecream
 pip install datasets
 
-
+# The following are not needed
 pip install av
 pip install opencv-python
 pip install triton==2.2.0 --no-cache-dir
