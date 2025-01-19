@@ -1,0 +1,84 @@
+
+# Install environment
+1. install on the cluster
+```
+git clone https://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@github.com/dragonlzm/PAVE_test.git
+
+
+
+module --force purge
+module load gcc/12.3.0
+module load anaconda/2020.11-py38
+
+conda-env-mod create -n lla_repro -p /depot/schaterj/data/3d/conda-env/lla_repro -m /depot/schaterj/data/3d/modules --jupyter -y
+
+module use /depot/schaterj/data/3d/modules
+module load conda-env/lla_repro-py3.8.5
+
+conda install python=3.10
+git clone https://github.com/haotian-liu/LLaVA.git ?
+cd PAVE_test ?
+pip install --upgrade pip  # enable PEP 660 support
+pip install -e .
+
+pip install flash-attn --no-build-isolation --no-cache-dir
+
+
+
+module load cuda/12.1
+module load cuda/11.2.0
+
+pip install triton==2.2.0 --no-cache-dir
+```
+
+2. Install on the normal machine
+```
+git clone https://github.com/haotian-liu/LLaVA.git?
+cd PAVE_test
+
+conda create -n pave python=3.10 -y
+conda activate pave
+pip install --upgrade pip  # enable PEP 660 support
+pip install -e .
+
+pip install flash-attn --no-build-isolation --no-cache-dir
+pip install peft==0.10.0
+pip install rotary-embedding-torch
+pip install icecream
+pip install datasets
+
+
+pip install av
+pip install opencv-python
+pip install triton==2.2.0 --no-cache-dir
+
+```
+
+3. prepare the huggingface
+```
+# reset the huggingface home directory 
+export HF_HOME 
+HF_HOME='/video_datasets/zhuoming/huggingface' 
+
+# login huggingface directory 
+huggingface-cli login
+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
+
+```
+
+4. Transfer the data
+```
+
+scp -i gilbreth.pem wang4495@gilbreth.rcac.purdue.edu:/depot/schaterj/data/3d/work_dir/zhuoming_temp/checkpoint_spare/vidit_v5_1_3_lora_7B.tar /video_datasets/zhuoming/checkpoints/vidit_v5_1_3_lora_7B.tar 
+
+scp -i gilbreth.pem wang4495@gilbreth.rcac.purdue.edu:/depot/schaterj/data/3d/work_dir/zhuoming_temp/checkpoint_spare/vidit_v5_1_2_lora_full.tar /video_datasets/zhuoming/checkpoints/vidit_v5_1_2_lora_full.tar 
+
+scp -i gilbreth.pem wang4495@gilbreth.rcac.purdue.edu:/depot/schaterj/data/3d/work_dir/zhuoming_temp/run_llama/data/video_instruction_tuning/LLaVA_Video_178K/1_2_m_academic_v0_1/academic_source/NextQA/0023/6971535794.mp4 /video_datasets/zhuoming/checkpoints/6971535794.mp4 
+
+scp -i gilbreth.pem wang4495@gilbreth.rcac.purdue.edu:/depot/schaterj/data/3d/work_dir/zhuoming_temp/run_llama/data/video_instruction_tuning/LLaVA_Video_178K/1_2_m_academic_v0_1/languagebind_feat/NextQA/0023/6971535794.pt /video_datasets/zhuoming/checkpoints/6971535794.pt 
+
+
+
+cd /video_datasets/zhuoming/checkpoints
+
+```
