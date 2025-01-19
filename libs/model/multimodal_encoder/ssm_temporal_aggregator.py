@@ -60,7 +60,7 @@ class Qwen2RotaryEmbedding(nn.Module):
         )
 
 
-class SSMTemporalAggregatorV5(nn.Module):
+class PAVEModuleV5(nn.Module):
     '''
         this backbone contains: 
         1. Multiple conv blocks

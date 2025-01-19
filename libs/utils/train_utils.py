@@ -132,7 +132,7 @@ class VideoFeatModelArgumentsV5:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')  # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')  # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=4,
@@ -226,7 +226,7 @@ class VideoFeatModelArgumentsV5_1:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')  # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')  # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,
@@ -317,7 +317,7 @@ class VideoFeatModelArgumentsV5_1_1:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')  # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')  # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,
@@ -412,7 +412,7 @@ class VideoFeatModelArgumentsV5_1_2:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,
@@ -504,7 +504,7 @@ class VideoFeatModelArgumentsV5_1_2_siglip:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1152,
@@ -600,7 +600,7 @@ class VideoFeatModelArgumentsV5_1_3:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,
@@ -696,7 +696,7 @@ class VideoFeatModelArgumentsV5_1_3_h1024:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,
@@ -790,7 +790,7 @@ class VideoFeatModelArgumentsV5_1_3_7B:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,
@@ -885,7 +885,7 @@ class VideoFeatModelArgumentsV5_1_3_7B_h1024:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,
@@ -982,7 +982,7 @@ class VideoFeatModelArgumentsV5_1_3_7B_hyper:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,
@@ -1078,7 +1078,7 @@ class VideoFeatModelArgumentsV5_1_3_3d:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,  # the 3d input is 1024
@@ -1173,7 +1173,7 @@ class VideoFeatModelArgumentsV5_1_3_3d_7B:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,  # the 3d input is 1024
@@ -1270,7 +1270,7 @@ class VideoFeatModelArgumentsV5_1_3_3d_v1:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,  # the 3d input is 768
@@ -1366,7 +1366,7 @@ class VideoFeatModelArgumentsV5_1_3_3d_v1_1:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,  # the 3d input is 768
@@ -1461,7 +1461,7 @@ class VideoFeatModelArgumentsV5_1_3_3d_learnable_query:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,  # the audio input is 768
@@ -1560,7 +1560,7 @@ class VideoFeatModelArgumentsV5_1_3_audio:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=768,  # the audio input is 768
@@ -1656,7 +1656,7 @@ class VideoFeatModelArgumentsV5_1_3_audio_learnable_query:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=768,  # the audio input is 768
@@ -1754,7 +1754,7 @@ class VideoFeatModelArgumentsV5_1_3_audio_7B:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=768,  # the audio input is 768
@@ -1850,7 +1850,7 @@ class VideoFeatModelArgumentsV5_1_3_audio_7B_3layers:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=768,  # the audio input is 768
@@ -1945,7 +1945,7 @@ class VideoFeatModelArgumentsV5_1_3_audio_languagebind_7B:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,  # the audio input is 1024
@@ -2040,7 +2040,7 @@ class VideoFeatModelArgumentsV5_1_3_audio_languagebind_7B_3layers:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,  # the audio input is 1024
@@ -2135,7 +2135,7 @@ class VideoFeatModelArgumentsV5_1_3_audio_languagebind_7B_1layers:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,  # the audio input is 1024
@@ -2231,7 +2231,7 @@ class VideoFeatModelArgumentsV5_1_3_audio_v1:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=768,  # the audio input is 768
@@ -2327,7 +2327,7 @@ class VideoFeatModelArgumentsV5_1_3_audio_v1_1:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=768,  # the audio input is 768
@@ -2424,7 +2424,7 @@ class VideoFeatModelArgumentsV5_1_4:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,
@@ -2518,7 +2518,7 @@ class VideoFeatModelArgumentsV5_1_5:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')    # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')    # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,
@@ -2616,7 +2616,7 @@ class VideoFeatModelArgumentsV5_1_mplug:
     pretrain_temporal_aggregator: Optional[str] = field(default=None)   # whether we have the pretrained temporal_aggregator (for step 2 training)
     pretrain_model_checkpoint: Optional[str] = field(default=None)      # Whether we have the pretrained model (for the ppo training) 
                                                                         # it expect the path has the checkpoint of the temporal aggregator and the LoRA weights    
-    temporal_aggregator_type: Optional[str] = field(default='ssmv5')  # The model type of the temporal_aggregator
+    temporal_aggregator_type: Optional[str] = field(default='pmv5')  # The model type of the temporal_aggregator
     # The first version with input embed + flatten feature
     temporal_aggregator_config = dict(
         input_dim=1024,

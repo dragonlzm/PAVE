@@ -178,7 +178,7 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
         kwargs['torch_dtype'] = torch.float16
     if use_flash_attn:
         kwargs['attn_implementation'] = 'flash_attention_2'
-    if 'vidit' in model_name.lower():
+    if 'pave' in model_name.lower():
         # ipdb.set_trace()
         # Load LLaVA model
         if 'lora' in model_name.lower() and model_base is None:
@@ -187,13 +187,13 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
                           Detailed instruction: https://github.com/haotian-liu/LLaVA#launch-a-model-worker-lora-weights-unmerged.')
         
         if 'lora' in model_name.lower() and model_base is not None:
-            from libs.model.language_model.vidit_qwen2 import ViditQwen2Config, ViditQwen2ForCausalLM
+            from libs.model.language_model.pave_qwen2 import PAVEQwen2Config, PAVEQwen2ForCausalLM
 
-            base_model_cfg = ViditQwen2Config.from_pretrained(model_base)
+            base_model_cfg = PAVEQwen2Config.from_pretrained(model_base)
             tokenizer = AutoTokenizer.from_pretrained(model_base, use_fast=False)
             print('Loading LLaVA from base model...')
-            model = ViditQwen2ForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=base_model_cfg, **kwargs)
-            lora_cfg_pretrained = ViditQwen2Config.from_pretrained(model_path)
+            model = PAVEQwen2ForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=base_model_cfg, **kwargs)
+            lora_cfg_pretrained = PAVEQwen2Config.from_pretrained(model_path)
             # reshaping the language head of the model
             token_num, tokem_dim = model.lm_head.out_features, model.lm_head.in_features
             if model.lm_head.weight.shape[0] != token_num:
@@ -301,8 +301,8 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
 
 ####################### load the downloaded checkpoints ####################################
 #the model path for each version
-# model_base = 'lmms-lab/llava-onevision-qwen2-7b-ov'
-# conv_mode = 'conv_llava_ov_qwen'
+model_base = 'lmms-lab/llava-onevision-qwen2-7b-ov'
+conv_mode = 'conv_llava_ov_qwen'
 
 # for general video
 # model_path = '/depot/schaterj/data/3d/work_dir/zhuoming_temp/storage/checkpoints/vidit_v5_1_3_lora_7B'
@@ -312,23 +312,23 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
 # task_type = 'video'
 # question = 'please describe the video ?'
 
-# model_path = '/depot/schaterj/data/3d/work_dir/zhuoming_temp/storage/checkpoints/vidit_v5_1_3_lora_7B'
-# model_arg_name = 'VideoFeatModelArgumentsV5_1_3_7B'
-# video_path = '/depot/schaterj/data/3d/work_dir/zhuoming_temp/run_llama/data/video_instruction_tuning/LLaVA_Video_178K/1_2_m_academic_v0_1/academic_source/NextQA/0023/6971535794.mp4'
-# feat_path = '/depot/schaterj/data/3d/work_dir/zhuoming_temp/run_llama/data/video_instruction_tuning/LLaVA_Video_178K/1_2_m_academic_v0_1/languagebind_feat/NextQA/0023/6971535794.pt' 
-# task_type = 'video'
-# question = 'please describe the video ?'
+model_path = '/depot/schaterj/data/3d/work_dir/zhuoming_temp/storage/checkpoints/pave_v5_1_3_lora_7B'
+model_arg_name = 'VideoFeatModelArgumentsV5_1_3_7B'
+video_path = '/depot/schaterj/data/3d/work_dir/zhuoming_temp/run_llama/data/video_instruction_tuning/LLaVA_Video_178K/1_2_m_academic_v0_1/academic_source/NextQA/0023/6971535794.mp4'
+feat_path = '/depot/schaterj/data/3d/work_dir/zhuoming_temp/run_llama/data/video_instruction_tuning/LLaVA_Video_178K/1_2_m_academic_v0_1/languagebind_feat/NextQA/0023/6971535794.pt' 
+task_type = 'video'
+question = 'please describe the video ?'
 
 
 # for 0.5B model test
-model_base = 'lmms-lab/llava-onevision-qwen2-0.5b-ov'
-conv_mode = 'conv_llava_ov_qwen'
-model_path = '/video_datasets/zhuoming/checkpoints/vidit_v5_1_2_lora_full'
-model_arg_name = 'VideoFeatModelArgumentsV5_1_2'
-video_path = '/video_datasets/zhuoming/checkpoints/6971535794.mp4'
-feat_path = '/video_datasets/zhuoming/checkpoints/6971535794.pt' 
-task_type = 'video'
-question = 'please describe the video ?'
+# model_base = 'lmms-lab/llava-onevision-qwen2-0.5b-ov'
+# conv_mode = 'conv_llava_ov_qwen'
+# model_path = '/video_datasets/zhuoming/checkpoints/vidit_v5_1_2_lora_full'
+# model_arg_name = 'VideoFeatModelArgumentsV5_1_2'
+# video_path = '/video_datasets/zhuoming/checkpoints/6971535794.mp4'
+# feat_path = '/video_datasets/zhuoming/checkpoints/6971535794.pt' 
+# task_type = 'video'
+# question = 'please describe the video ?'
 
 
 # for audio

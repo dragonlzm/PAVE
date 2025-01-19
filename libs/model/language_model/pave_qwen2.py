@@ -9,26 +9,26 @@ from transformers import AutoConfig, AutoModelForCausalLM, \
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from transformers.generation.utils import GenerateOutput
 
-from libs.model.vidit_arch import ViditMetaModel, ViditMetaForCausalLM
+from libs.model.pave_arch import PAVEMetaModel, PAVEMetaForCausalLM
 
 
-class ViditQwen2Config(Qwen2Config):
-    model_type = "vidit_qwen2"
+class PAVEQwen2Config(Qwen2Config):
+    model_type = "pave_qwen2"
 
 
-class ViditQwen2Model(ViditMetaModel, Qwen2Model):
-    config_class = ViditQwen2Config
+class PAVEQwen2Model(PAVEMetaModel, Qwen2Model):
+    config_class = PAVEQwen2Config
 
     def __init__(self, config: Qwen2Config):
-        super(ViditQwen2Model, self).__init__(config)
+        super(PAVEQwen2Model, self).__init__(config)
         
 
-class ViditQwen2ForCausalLM(Qwen2ForCausalLM, ViditMetaForCausalLM):
-    config_class = ViditQwen2Config
+class PAVEQwen2ForCausalLM(Qwen2ForCausalLM, PAVEMetaForCausalLM):
+    config_class = PAVEQwen2Config
 
     def __init__(self, config):
         super(Qwen2ForCausalLM, self).__init__(config)
-        self.model = ViditQwen2Model(config)
+        self.model = PAVEQwen2Model(config)
         # self.pretraining_tp = config.pretraining_tp
         self.vocab_size = config.vocab_size
         self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
@@ -205,5 +205,5 @@ class ViditQwen2ForCausalLM(Qwen2ForCausalLM, ViditMetaForCausalLM):
             inputs['video_sizes'] = video_sizes
         return inputs
 
-AutoConfig.register("vidit_qwen2", ViditQwen2Config)
-AutoModelForCausalLM.register(ViditQwen2Config, ViditQwen2ForCausalLM)
+AutoConfig.register("pave_qwen2", PAVEQwen2Config)
+AutoModelForCausalLM.register(PAVEQwen2Config, PAVEQwen2ForCausalLM)

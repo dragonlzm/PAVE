@@ -15,7 +15,7 @@ from libs.utils.train_utils import parse_argument_classes, get_peft_state_maybe_
 from libs.dataset.base_dataset import make_video_supervised_data_module
 from utils import prepare_video_model
 
-def train_vidit_func(attn_implementation=None):
+def train_pave_func(attn_implementation=None):
     global local_rank
     # check the model_class name, data_class name and the training_class name
     # remaining_args, model_arg_class, data_arg_class, training_arg_class = parse_argument_classes(sys.argv[1:])
@@ -71,4 +71,4 @@ def train_vidit_func(attn_implementation=None):
 
 
 if __name__ == "__main__":
-    train_vidit_func(attn_implementation="flash_attention_2")
+    train_pave_func(attn_implementation="flash_attention_2")

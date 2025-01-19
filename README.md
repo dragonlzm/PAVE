@@ -41,7 +41,9 @@ conda activate pave
 pip install --upgrade pip  # enable PEP 660 support
 pip install -e .
 
-pip install flash-attn --no-build-isolation --no-cache-dir
+pip install flash-attn==2.5.9.post1 --no-build-isolation --no-cache-dir
+pip install flash-attn==2.7.3 --no-build-isolation --no-cache-dir
+
 pip install peft==0.10.0
 pip install rotary-embedding-torch
 pip install icecream
@@ -82,3 +84,59 @@ scp -i gilbreth.pem wang4495@gilbreth.rcac.purdue.edu:/depot/schaterj/data/3d/wo
 cd /video_datasets/zhuoming/checkpoints
 
 ```
+
+5. test scripts
+```
+ln -sf /depot/schaterj/data/3d/work_dir/zhuoming_temp/storage/checkpoints /depot/schaterj/data/3d/work_dir/zhuoming_temp/PAVE_test/checkpoints
+ln -sf /depot/schaterj/data/3d/work_dir/zhuoming_temp/storage/data /depot/schaterj/data/3d/work_dir/zhuoming_temp/PAVE_test/data
+
+export HF_HOME 
+HF_HOME='/depot/schaterj/data/3d/work_dir/zhuoming_temp/huggingface' 
+
+# test the inference
+python demo_pave.py
+
+# test the training
+WANDB__SERVICE_WAIT=500 deepspeed --master_port 60000 train_pave_w_feat.py \
+    --deepspeed ./scripts/zero2.json \
+    --lora_enable True \
+    --annotation_path ./data/video_instruction_tuning/avsd/avsd_train_instruct.json  \
+    --fast_path_mapping_path ./data/video_instruction_tuning/avsd/all_feats_mapping.json \
+    --slow_path_mapping_path ./data/video_instruction_tuning/avsd/all_videos_mapping.json \
+    --data_root ./data/video_instruction_tuning/avsd/Charades_v1_audio_imagebind_feat \
+    --slow_path_data_root ./data/video_instruction_tuning/avsd/Charades_v1_480 \
+    --use_fast_feat True \
+    --use_slow True \
+    --model_name_or_path lmms-lab/llava-onevision-qwen2-7b-ov \
+    --version conv_llava_ov_qwen \
+    --model_class VideoFeatModelArgumentsV5_1_3_audio_languagebind_7B \
+    --output_dir ./checkpoints/testing \
+    --num_train_epochs 1 \
+    --per_device_train_batch_size 4 \
+    --per_device_eval_batch_size 4 \
+    --gradient_accumulation_steps 8 \
+    --evaluation_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps 2000 \
+    --save_total_limit 1 \
+    --learning_rate 2e-5 \
+    --weight_decay 0. \
+    --warmup_ratio 0.03 \
+    --lr_scheduler_type "cosine" \
+    --logging_steps 1 \
+    --model_max_length 2048 \
+    --gradient_checkpointing True \
+    --dataloader_num_workers 8 \
+    --lazy_preprocess True \
+    --report_to wandb \
+    --bf16 True \
+    --tf32 True \
+    --mm_newline_position grid \
+    --mm_spatial_pool_mode bilinear \
+    --feat_combine_method add \
+    --fast_feat_type audio
+
+```
+
+# Notes
+1. we do minor twist in the libs\model\multimodal_encoder\blocks.py to fix the output of the function unpad_input caused by the flash-attn version 2.7.3

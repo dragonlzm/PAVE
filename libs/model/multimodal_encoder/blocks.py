@@ -294,8 +294,9 @@ class VideoCrossAttentionWith3DRope(nn.Module):
                 kv_padding_mask = torch.tensor([[True]*curr_seq_len + [False]*(k_max_len-curr_seq_len) for curr_seq_len in spatial_attn_mask]).to(k.device)
                 # handle the k and v
                 # ipdb.set_trace()
-                k_unpad, indices_k, cu_seqlens_k, max_seqlen_k = unpad_input(k.transpose(1, 2), kv_padding_mask) # k: (batch_size, seqlen_k, nheads, d)
-                v_unpad, indices_v, cu_seqlens_v, max_seqlen_v = unpad_input(v.transpose(1, 2), kv_padding_mask) # v: (batch_size, seqlen_v, nheads, d)
+                # here is minor update for compatible with the flash-attn-2.7.3
+                k_unpad, indices_k, cu_seqlens_k, max_seqlen_k,_ = unpad_input(k.transpose(1, 2), kv_padding_mask) # k: (batch_size, seqlen_k, nheads, d)
+                v_unpad, indices_v, cu_seqlens_v, max_seqlen_v,_ = unpad_input(v.transpose(1, 2), kv_padding_mask) # v: (batch_size, seqlen_v, nheads, d)
                 # handle the q (B, H_num, q_len, H_dim)
                 cu_seqlens_q = torch.tensor([S_q * i for i in range(k.shape[0]+1)]).to(k.device, dtype=torch.int32)
                 max_seqlen_q = S_q

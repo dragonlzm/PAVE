@@ -1,6 +1,6 @@
 import os
 from .clip_encoder import CLIPVisionTower, CLIPVisionTowerS2
-from .ssm_temporal_aggregator import SSMTemporalAggregatorV5
+from .ssm_temporal_aggregator import PAVEModuleV5
 from .siglip_encoder import SigLipVisionTower
 
 
@@ -36,7 +36,7 @@ def build_temporal_aggregator(video_tower_cfg, **kwargs):
     # add additional config
     video_tower_cfg.temporal_aggregator_config['train_addition_start_end_tokens'] = video_tower_cfg.train_addition_start_end_tokens
 
-    if adaptor_type == 'ssmv5':
-        return SSMTemporalAggregatorV5(**video_tower_cfg.temporal_aggregator_config)
+    if adaptor_type == 'pmv5':
+        return PAVEModuleV5(**video_tower_cfg.temporal_aggregator_config)
     else:
         raise NotImplementedError

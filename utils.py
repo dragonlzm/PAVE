@@ -54,7 +54,7 @@ def prepare_video_model(training_args, model_args, data_args, compute_dtype, att
     # It will load LLM + Vision backbone + MLP
     if model_args.video_tower is not None or model_args.vision_tower is not None:
         if 'qwen2' in model_args.model_name_or_path.lower():
-            model = ViditQwen2ForCausalLM.from_pretrained(
+            model = PAVEQwen2ForCausalLM.from_pretrained(
                 model_args.model_name_or_path,
                 cache_dir=training_args.cache_dir,
                 attn_implementation=attn_implementation,
@@ -285,7 +285,7 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
     if use_flash_attn:
         kwargs['attn_implementation'] = 'flash_attention_2'
 
-    if 'vidit' in model_name.lower():
+    if 'pave' in model_name.lower():
         # ipdb.set_trace()
         # Load LLaVA model
         if 'lora' in model_name.lower() and model_base is None:
@@ -294,13 +294,13 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
                           Detailed instruction: https://github.com/haotian-liu/LLaVA#launch-a-model-worker-lora-weights-unmerged.')
         
         if 'lora' in model_name.lower() and model_base is not None:
-            from libs.model.language_model.vidit_qwen2 import ViditQwen2Config, ViditQwen2ForCausalLM
+            from libs.model.language_model.pave_qwen2 import PAVEQwen2Config, PAVEQwen2ForCausalLM
 
-            base_model_cfg = ViditQwen2Config.from_pretrained(model_base)
+            base_model_cfg = PAVEQwen2Config.from_pretrained(model_base)
             tokenizer = AutoTokenizer.from_pretrained(model_base, use_fast=False)
             print('Loading LLaVA from base model...')
-            model = ViditQwen2ForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=base_model_cfg, **kwargs)
-            lora_cfg_pretrained = ViditQwen2Config.from_pretrained(model_path)
+            model = PAVEQwen2ForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=base_model_cfg, **kwargs)
+            lora_cfg_pretrained = PAVEQwen2Config.from_pretrained(model_path)
             
             # reshaping the language head of the model
             token_num, tokem_dim = model.lm_head.out_features, model.lm_head.in_features
@@ -380,13 +380,13 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
             # ipdb.set_trace() # check the loading of the tokenizer, the size of the tokenizer
             
         elif 'adaptor' in model_name.lower() and model_base is not None: # for the case we only train the adaptor
-            from libs.model.language_model.vidit_qwen2 import ViditQwen2Config
+            from libs.model.language_model.pave_qwen2 import PAVEQwen2Config
 
             # init the base LLM model
-            base_model_cfg = ViditQwen2Config.from_pretrained(model_base)
+            base_model_cfg = PAVEQwen2Config.from_pretrained(model_base)
             tokenizer = AutoTokenizer.from_pretrained(model_base, use_fast=False)
             print('Loading LLaVA from base model...')
-            model = ViditQwen2ForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=base_model_cfg, **kwargs)
+            model = PAVEQwen2ForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=base_model_cfg, **kwargs)
             token_num, tokem_dim = model.lm_head.out_features, model.lm_head.in_features
             if model.lm_head.weight.shape[0] != token_num:
                 print('re-initing the lm_head')
@@ -395,7 +395,7 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
 
             ## init the vision module 
             print('Init the vision module ...')
-            cfg_pretrained = ViditQwen2Config.from_pretrained(model_path)
+            cfg_pretrained = PAVEQwen2Config.from_pretrained(model_path)
             
             # merge the training config with the lora config
             # the cfg_pretrained contains the parameters sended in through command line
@@ -462,22 +462,6 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
     if 'mplug' in  model_name.lower():
         print('adding additional token for mplug')
         tokenizer.add_tokens([DEFAULT_IMAGE_TOKEN], special_tokens=True)
-
-    # if 'vidit' in model_name.lower():
-    #     mm_use_im_start_end = getattr(model.config, "mm_use_im_start_end", False)
-    #     mm_use_im_patch_token = getattr(model.config, "mm_use_im_patch_token", False)
-    #     if mm_use_im_patch_token:
-    #         tokenizer.add_tokens([DEFAULT_IMAGE_PATCH_TOKEN], special_tokens=True)
-    #     if mm_use_im_start_end:
-    #         tokenizer.add_tokens([DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN], special_tokens=True)
-    #     model.resize_token_embeddings(len(tokenizer))
-
-    #     video_tower = model.get_video_tower()
-    #     if not video_tower.is_loaded:
-    #         video_tower.load_model(device_map=device_map)
-    #     if device_map != 'auto':
-    #         video_tower.to(device=device_map, dtype=torch.float16)
-    #     # image_processor = vision_tower.image_processor
 
     if hasattr(model.config, "max_sequence_length"):
         context_len = model.config.max_sequence_length

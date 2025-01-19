@@ -35,10 +35,10 @@ def get_weight(weights, keyword):
     return {k.split(keyword + ".")[1]: v for k, v in weights.items() if keyword in k}
 
 
-class ViditMetaModel:
+class PAVEMetaModel:
 
     def __init__(self, config):
-        super(ViditMetaModel, self).__init__(config)
+        super(PAVEMetaModel, self).__init__(config)
 
         # The Fast-Path
         if hasattr(config, "mm_video_tower"):
@@ -259,7 +259,7 @@ def unpad_image(tensor, original_size):
     return unpadded_tensor
 
 
-class ViditMetaForCausalLM(ABC):
+class PAVEMetaForCausalLM(ABC):
 
     @abstractmethod
     def get_model(self):
