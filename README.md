@@ -36,7 +36,7 @@ pip install rotary-embedding-torch
 
 
 ## PAVE Weights
-### 3D-QA
+### 1. 3D-QA
 
 | Dataset | Base Model | Schedule | Checkpoint | ScanQA (C) | ScanQA (B-4) | ScanQA (M) | ScanQA (R) | ScanQA (EM@1) | SQA3D (EM@1)
 |----------|----------|-----------|-----------|---|---|---|---|---|---|
@@ -45,7 +45,7 @@ pip install rotary-embedding-torch
 | SQA3D  | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 2e | Coming Soon | - | - | - | - | - | ? | 
 | SQA3D  | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 2e | [pave_sqa3d_v5_1_3_3d_lora_7B_2epoch](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_sqa3d_v5_1_3_3d_lora_7B_2epoch.zip) | - | - | - | - | - | 59.0 (61.4) | 
 
-### Audio-Visual
+### 2. Audio-Visual
 
 | Dataset | Base Model | Schedule | Checkpoint | AVSD (CIDEr) | Music-AVQA (Audio Acc) | Music-AVQA (Visual Acc) | Music-AVQA (Audio-Visual Acc) | Music-AVQA (Overall Acc) |
 |----------|----------|-----------|-----------|---|---|---|---|---|
@@ -55,7 +55,12 @@ pip install rotary-embedding-torch
 | Music-AVQA | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 2e | [pave_v5_1_3_lora_music_avqa7B_2epoch_imagebind_3layers](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_music_avqa7B_2epoch_imagebind_3layers.zip) | - | 79.7 | 93.0 | 78.0 | 82.3 |
 
 
-### Enhancing Video QA
+### 3. Enhancing Video QA
+| Base Model | Schedule | Checkpoint | VideoMME (Short) | VideoMME (Long) | VideoMME (Visual Acc) | MVBench |
+|----------|-----------|-----------|---|---|---|---|
+| [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 1e | Coming Soon | 57.8 | 42.7 | 37.4 | 46.0 | 46.6 |
+| [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 1e | [pave_v5_1_3_lora_7B](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_7B.zip) | 71.1 | 59.4 | 49.2 | 59.9 | 58.0 | 
+
 
 
 ## Features
