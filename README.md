@@ -38,14 +38,22 @@ pip install rotary-embedding-torch
 ## PAVE Weights
 ### 3D-QA
 
-| Dataset | Base Model | Schedule | Checkpoint | MMMU | MathVista | VQAv2 | GQA | VizWiz | SQA | TextVQA | POPE | MME | MM-Bench | MM-Bench-CN | SEED-IMG | LLaVA-Bench-Wild | MM-Vet |
-|----------|----------|-----------|-----------|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| ScanQA | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 1e | [pave_scanqa_v5_1_3_3d_lora](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_scanqa_v5_1_3_3d_lora.zip) | 35.8 | 34.6 | 81.8 | 64.2 | 57.6 | 70.1 | 64.9 | 86.5 | 1519/332 | 67.4 | 60.6 | 70.2 | 81.6 | 43.9 |
-| ScanQA | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 1e | [pave_scanqa_v5_1_3_3d_lora_7B](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_scanqa_v5_1_3_3d_lora_7B.zip) | 36.2 | 35.3 | 82.8 | 65.4 | 60.5 | 73.6 | 67.1 | 86.2 | 1575/326 | 70 | 64.4 | 71.9 | 87.3 | 48.4 |
-| SQA3D  | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 2e | Coming Soon | 35.3 | 37.7 | 82.2 | 64.8 | 60.0 | 72.8 | 65.7 | 86.7 | 1498/321 | 68.7 | 61.2 | 72.2 | 83.2 | 47.3 |
-| SQA3D  | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 2e | [pave_sqa3d_v5_1_3_3d_lora_7B_2epoch](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_sqa3d_v5_1_3_3d_lora_7B_2epoch.zip) | 51.1 | 46.5 | 83.7 | 67.1 | 63.8 | 81.8 | 69.5 | 87.7 | 1631/397 | 79.3 | 79 | 75.9 | 89.6 | 57.4 |
+| Dataset | Base Model | Schedule | Checkpoint | ScanQA (C) | ScanQA (B-4) | ScanQA (M) | ScanQA (R) | ScanQA (EM@1) | SQA3D (EM@1)
+|----------|----------|-----------|-----------|---|---|---|---|---|---|
+| ScanQA | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 1e | [pave_scanqa_v5_1_3_3d_lora](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_scanqa_v5_1_3_3d_lora.zip) |  84.2 | 13.1 | 17.0 | 42.1 | 23.1 (40.0) | - |
+| ScanQA | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 1e | [pave_scanqa_v5_1_3_3d_lora_7B](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_scanqa_v5_1_3_3d_lora_7B.zip) | 103.4 | 16.0 | 19.9 | 49.0 | 29.1 (48.5) | - | 
+| SQA3D  | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 2e | Coming Soon | - | - | - | - | - | ? | 
+| SQA3D  | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 2e | [pave_sqa3d_v5_1_3_3d_lora_7B_2epoch](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_sqa3d_v5_1_3_3d_lora_7B_2epoch.zip) | - | - | - | - | - | 59.0 (61.4) | 
 
 ### Audio-Visual
+
+| Dataset | Base Model | Schedule | Checkpoint | ScanQA (C) | ScanQA (B-4) | ScanQA (M) | ScanQA (R) | ScanQA (EM@1) | SQA3D (EM@1)
+|----------|----------|-----------|-----------|---|---|---|---|---|---|
+| AVSD | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 1e | [pave_v5_1_3_lora_avsd](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_avsd.zip) |  134.2 | - | - |- | - | - |
+| AVSD | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 1e | [pave_v5_1_3_lora_avsd_7B](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_avsd_7B.zip) | 103.4 | 16.0 | 19.9 | 49.0 | 29.1 (48.5) | - | 
+| Music-AVQA | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 2e | Coming Soon | - | - | - | - | - | ? | 
+| Music-AVQA | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 2e | [pave_v5_1_3_lora_music_avqa7B_2epoch_imagebind_3layers](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_music_avqa7B_2epoch_imagebind_3layers.zip) | - | - | - | - | - | 59.0 (61.4) | 
+
 
 ### Enhancing Video QA
 
