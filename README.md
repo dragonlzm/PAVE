@@ -64,13 +64,21 @@ pip install rotary-embedding-torch
 
 
 ## Datasets
-1. ScanQA
-Please refer to [ScanQA](./doc/scanqa_dataset_prep.md) for more information.
+### 1. ScanQA
+Please refer to [ScanQA_Prepare](./doc/scanqa_dataset_prep.md) for more information.
 
-2. SQA3D
-3. AVSD
-4. Music-AVQA
-5. LLaVA-Video
+### 2. SQA3D
+Please refer to [SQA3D_Prepare](./doc/sqa3d_dataset_prep.md) for more information.
+
+### 3. AVSD
+Please refer to [AVSD_Prepare](./doc/avsd_dataset_prep.md) for more information.
+
+### 4. Music-AVQA
+Please refer to [Music-AVQA_Prepare](./doc/music_avqa_dataset_prep.md) for more information.
+
+### 5. LLaVA-Video
+Please refer to [LLaVA-Video_Prepare](./doc/llava_video_dataset_prep.md) for more information.
+
 ### Prepare the feature by yourself
 
 ### Pre-extracted features

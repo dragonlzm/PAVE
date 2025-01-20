@@ -1,8 +1,7 @@
-# Prepare the training and test dataset of the ScanQA
+# Prepare the training and test dataset of the SQA3D
 
-## Download and prepare training / test annotations and videos
-1. You can download the training / test annotations and videos from [ScanQA](https://github.com/ATR-DBI/ScanQA).
-2. Evenly extract the 32 RGB frames and depth frames from the raw files (sample scripts).
+## Download the training / test annotations and videos
+You can download the training / test annotations and videos from [SQA3D](https://sqa3d.github.io/).
 
 ## Convert the training annotation 
 You need to convert the raw training annotation into instruction tuning dataset. Please refer to file tools\AVSD\convert_annotation_to_training_format.py
