@@ -194,7 +194,6 @@ def preprocess_llama_2(
         conversations.append(conv.get_prompt())
 
     # Tokenize conversations
-
     if has_image:
         input_ids = torch.stack([tokenizer_vision_token(prompt, tokenizer, return_tensors='pt') for prompt in conversations], dim=0)
     else:
@@ -355,7 +354,6 @@ def preprocess_qwen(
     # <|im_start|>user\n<video>\nCan you describe the video content in detail?<|im_end|>\n
     # <|im_start|>assistant\nCertainly! The video portrays a woman walking along a field and ...
     # showcasing its ability to be utilized as a means for both entertainment and fitness.<|im_end|>\n']
-
     # Apply prompt templates (adding the system information before the conversation)
     if prepare_qid:
         assert len(sources[0]) == 2 # assert this is a one round conversation
@@ -473,7 +471,6 @@ def preprocess_mpt(
         conversations.append(conv.get_prompt())
 
     # Tokenize conversations
-
     if has_image:
         input_ids = torch.stack([tokenizer_vision_token(prompt, tokenizer, return_tensors='pt') for prompt in conversations], dim=0)
     else:
