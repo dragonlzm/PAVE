@@ -1,5 +1,19 @@
+# 🛠️ PAVE: Patching and Adapting Video Large Language Models
 
-# Install environment
+## Contents
+- [Install](#install)
+- [PAVE Weights](#pave-weights)
+- [Features](#features)
+- [Demo](#Demo)
+- [Train](#train)
+- [Evaluation](#evaluation)
+
+<!-- - [Model Zoo](https://github.com/haotian-liu/LLaVA/blob/main/docs/MODEL_ZOO.md) -->
+<!-- - [Dataset](https://github.com/haotian-liu/LLaVA/blob/main/docs/Data.md) -->
+
+
+
+## Install
 1. install on the cluster
 ```
 git clone https://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@github.com/dragonlzm/PAVE_test.git
@@ -138,6 +152,20 @@ WANDB__SERVICE_WAIT=500 deepspeed --master_port 60000 train_pave_w_feat.py \
 
 ```
 
-# Notes
+## PAVE Weights
+
+## Features
+### Pre-extracted features
+
+### Prepare the feature by yourself
+
+
+## Demo
+
+## Train
+
+## Evaluation
+
+## Notes
 1. we do minor twist in the libs\model\multimodal_encoder\blocks.py to fix the output of the function unpad_input caused by the flash-attn version 2.7.3.
 2. change the "temporal_aggregator_type": "pmv5" in config.json in python, this is caused by renaming of the information aggregation module.
