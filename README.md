@@ -14,7 +14,59 @@
 
 
 ## Install
-1. install on the cluster
+
+We install this environment on Linux machine:
+1. Clone the repository and navigate to PAVE folder 
+```
+git clone https://github.com/dragonlzm/PAVE_test.git
+cd PAVE_test
+```
+
+2. Install Packages
+```
+conda create -n pave python=3.10 -y
+conda activate pave
+pip install --upgrade pip  # enable PEP 660 support
+pip install -e .
+
+pip install flash-attn==2.7.3 --no-build-isolation --no-cache-dir
+pip install peft==0.10.0
+pip install rotary-embedding-torch
+```
+
+
+## PAVE Weights
+### 3D-QA
+
+| Dataset | Base Model | Schedule | Checkpoint | MMMU | MathVista | VQAv2 | GQA | VizWiz | SQA | TextVQA | POPE | MME | MM-Bench | MM-Bench-CN | SEED-IMG | LLaVA-Bench-Wild | MM-Vet |
+|----------|----------|-----------|-----------|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| ScanQA | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 1e | [pave_scanqa_v5_1_3_3d_lora](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_scanqa_v5_1_3_3d_lora.zip) | 35.8 | 34.6 | 81.8 | 64.2 | 57.6 | 70.1 | 64.9 | 86.5 | 1519/332 | 67.4 | 60.6 | 70.2 | 81.6 | 43.9 |
+| ScanQA | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 1e | [pave_scanqa_v5_1_3_3d_lora_7B](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_scanqa_v5_1_3_3d_lora_7B.zip) | 36.2 | 35.3 | 82.8 | 65.4 | 60.5 | 73.6 | 67.1 | 86.2 | 1575/326 | 70 | 64.4 | 71.9 | 87.3 | 48.4 |
+| SQA3D  | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 2e | Coming Soon | 35.3 | 37.7 | 82.2 | 64.8 | 60.0 | 72.8 | 65.7 | 86.7 | 1498/321 | 68.7 | 61.2 | 72.2 | 83.2 | 47.3 |
+| SQA3D  | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 2e | [pave_sqa3d_v5_1_3_3d_lora_7B_2epoch](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_sqa3d_v5_1_3_3d_lora_7B_2epoch.zip) | 51.1 | 46.5 | 83.7 | 67.1 | 63.8 | 81.8 | 69.5 | 87.7 | 1631/397 | 79.3 | 79 | 75.9 | 89.6 | 57.4 |
+
+### Audio-Visual
+
+### Enhancing Video QA
+
+
+## Features
+### Pre-extracted features
+
+### Prepare the feature by yourself
+
+
+## Demo
+
+## Train
+
+## Evaluation
+
+## Personal Notes
+1. we do minor twist in the libs\model\multimodal_encoder\blocks.py to fix the output of the function unpad_input caused by the flash-attn version 2.7.3.
+2. change the "temporal_aggregator_type": "pmv5" in config.json in python, this is caused by renaming of the information aggregation module.
+3. change the folder name starting with vidit with pave
+3. install on the cluster
 ```
 git clone https://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@github.com/dragonlzm/PAVE_test.git
 
@@ -35,26 +87,6 @@ cd PAVE_test ?
 pip install --upgrade pip  # enable PEP 660 support
 pip install -e .
 
-pip install flash-attn --no-build-isolation --no-cache-dir
-
-
-
-module load cuda/12.1
-module load cuda/11.2.0
-
-pip install triton==2.2.0 --no-cache-dir
-```
-
-2. Install on the normal machine
-```
-git clone https://github.com/haotian-liu/LLaVA.git?
-cd PAVE_test
-
-conda create -n pave python=3.10 -y
-conda activate pave
-pip install --upgrade pip  # enable PEP 660 support
-pip install -e .
-
 pip install flash-attn==2.5.9.post1 --no-build-isolation --no-cache-dir
 pip install flash-attn==2.7.3 --no-build-isolation --no-cache-dir
 
@@ -68,23 +100,30 @@ pip install av
 pip install opencv-python
 pip install triton==2.2.0 --no-cache-dir
 
+
+module load cuda/12.1
+module load cuda/11.2.0
+
+pip install triton==2.2.0 --no-cache-dir
 ```
 
-3. prepare the huggingface
+
+
+4. reset the huggingface home directory 
 ```
-# reset the huggingface home directory 
 export HF_HOME 
 HF_HOME='/video_datasets/zhuoming/huggingface' 
+```
 
-# login huggingface directory 
+5. login huggingface directory 
+```
 huggingface-cli login
 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
 
 ```
 
-4. Transfer the data
+6. Transfer the data
 ```
-
 scp -i gilbreth.pem wang4495@gilbreth.rcac.purdue.edu:/depot/schaterj/data/3d/work_dir/zhuoming_temp/checkpoint_spare/vidit_v5_1_3_lora_7B.tar /video_datasets/zhuoming/checkpoints/vidit_v5_1_3_lora_7B.tar 
 
 scp -i gilbreth.pem wang4495@gilbreth.rcac.purdue.edu:/depot/schaterj/data/3d/work_dir/zhuoming_temp/checkpoint_spare/vidit_v5_1_2_lora_full.tar /video_datasets/zhuoming/checkpoints/vidit_v5_1_2_lora_full.tar 
@@ -93,13 +132,10 @@ scp -i gilbreth.pem wang4495@gilbreth.rcac.purdue.edu:/depot/schaterj/data/3d/wo
 
 scp -i gilbreth.pem wang4495@gilbreth.rcac.purdue.edu:/depot/schaterj/data/3d/work_dir/zhuoming_temp/run_llama/data/video_instruction_tuning/LLaVA_Video_178K/1_2_m_academic_v0_1/languagebind_feat/NextQA/0023/6971535794.pt /video_datasets/zhuoming/checkpoints/6971535794.pt 
 
-
-
 cd /video_datasets/zhuoming/checkpoints
-
 ```
 
-5. test scripts
+7. test scripts
 ```
 ln -sf /depot/schaterj/data/3d/work_dir/zhuoming_temp/storage/checkpoints /depot/schaterj/data/3d/work_dir/zhuoming_temp/PAVE_test/checkpoints
 ln -sf /depot/schaterj/data/3d/work_dir/zhuoming_temp/storage/data /depot/schaterj/data/3d/work_dir/zhuoming_temp/PAVE_test/data
@@ -151,21 +187,3 @@ WANDB__SERVICE_WAIT=500 deepspeed --master_port 60000 train_pave_w_feat.py \
     --fast_feat_type audio
 
 ```
-
-## PAVE Weights
-
-## Features
-### Pre-extracted features
-
-### Prepare the feature by yourself
-
-
-## Demo
-
-## Train
-
-## Evaluation
-
-## Notes
-1. we do minor twist in the libs\model\multimodal_encoder\blocks.py to fix the output of the function unpad_input caused by the flash-attn version 2.7.3.
-2. change the "temporal_aggregator_type": "pmv5" in config.json in python, this is caused by renaming of the information aggregation module.
