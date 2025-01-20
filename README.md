@@ -47,12 +47,12 @@ pip install rotary-embedding-torch
 
 ### Audio-Visual
 
-| Dataset | Base Model | Schedule | Checkpoint | ScanQA (C) | ScanQA (B-4) | ScanQA (M) | ScanQA (R) | ScanQA (EM@1) | SQA3D (EM@1)
+| Dataset | Base Model | Schedule | Checkpoint | AVSD (CIDEr) | Music-AVQA (Audio Acc) | Music-AVQA (Visual Acc) | Music-AVQA (Audio-Visual Acc) | Music-AVQA (Overall Acc) |
 |----------|----------|-----------|-----------|---|---|---|---|---|---|
-| AVSD | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 1e | [pave_v5_1_3_lora_avsd](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_avsd.zip) |  134.2 | - | - |- | - | - |
-| AVSD | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 1e | [pave_v5_1_3_lora_avsd_7B](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_avsd_7B.zip) | 103.4 | 16.0 | 19.9 | 49.0 | 29.1 (48.5) | - | 
-| Music-AVQA | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 2e | Coming Soon | - | - | - | - | - | ? | 
-| Music-AVQA | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 2e | [pave_v5_1_3_lora_music_avqa7B_2epoch_imagebind_3layers](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_music_avqa7B_2epoch_imagebind_3layers.zip) | - | - | - | - | - | 59.0 (61.4) | 
+| AVSD | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 1e | [pave_v5_1_3_lora_avsd](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_avsd.zip) | 134.2 | - | - | - | - |
+| AVSD | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 1e | [pave_v5_1_3_lora_avsd_7B](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_avsd_7B.zip) | 152.9 | - | - | - | - | 
+| Music-AVQA | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 2e | Coming Soon | - | ? | ? | ? | ? |
+| Music-AVQA | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 2e | [pave_v5_1_3_lora_music_avqa7B_2epoch_imagebind_3layers](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_music_avqa7B_2epoch_imagebind_3layers.zip) | - | 79.7 | 93.0 | 78.0 | 82.3 |
 
 
 ### Enhancing Video QA
