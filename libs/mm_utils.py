@@ -1,3 +1,5 @@
+# This script adapted from LLaVA: https://github.com/haotian-liu/LLaVA/tree/main/llava, and holds all the data preprocessing.
+
 from PIL import Image
 from io import BytesIO
 import base64
@@ -182,19 +184,7 @@ def process_images(images, image_processor, model_cfg):
     return new_images
 
 
-def tokenizer_vision_token(prompt, tokenizer, vision_token=DEFAULT_IMAGE_TOKEN, image_token_index=IMAGE_TOKEN_INDEX, return_tensors=None):
-    # prompt_chunks: [[1, 319, 13563, 1546, 263, 12758, 1404, 322, 385, 23116, 21082, 20255, 29889, 450, 20255, 4076, 8444, 29892, 
-    # 13173, 29892, 322, 1248, 568, 6089, 304, 278, 1404, 29915, 29879, 5155, 29889, 3148, 1001, 29901, 29871], 
-    # [1, 29871, 13, 2713, 598, 263, 3022, 895, 19854, 310, 278, 1967, 4944, 29889, 319, 1799, 9047, 13566, 29901, 5320, 
-    # 832, 14442, 15373, 310, 2305, 297, 385, 8034, 411, 385, 1663, 3395, 2768, 714, 29892, 15874, 310, 10021, 322, 282, 
-    # 4182, 2]]
-    # insert_separator(prompt_chunks, [image_token_index] * (offset + 1)): [[1, 319, 13563, 1546, 263, 12758, 1404, 322, 385, 
-    # 23116, 21082, 20255, 29889, 450, 20255, 4076, 8444, 29892, 13173, 29892, 322, 1248, 568, 6089, 
-    # 304, 278, 1404, 29915, 29879, 5155, 29889, 3148, 1001, 29901, 29871], [-200, -200], 
-    # [1, 29871, 13, 2713, 598, 263, 3022, 895, 19854, 310, 278, 1967, 4944, 29889, 319, 1799, 
-    # 9047, 13566, 29901, 5320, 832, 14442, 15373, 310, 2305, 297, 385, 8034, 411, 385, 1663, 
-    # 3395, 2768, 714, 29892, 15874, 310, 10021, 322, 282, 4182, 2]]
-    
+def tokenizer_vision_token(prompt, tokenizer, vision_token=DEFAULT_IMAGE_TOKEN, image_token_index=IMAGE_TOKEN_INDEX, return_tensors=None): 
     prompt_chunks = [tokenizer(chunk).input_ids for chunk in prompt.split(vision_token)]
 
     def insert_separator(X, sep):
@@ -218,6 +208,7 @@ def tokenizer_vision_token(prompt, tokenizer, vision_token=DEFAULT_IMAGE_TOKEN, 
         raise ValueError(f'Unsupported tensor type: {return_tensors}')
     return input_ids
 
+
 def get_model_name_from_path(model_path):
     model_path = model_path.strip("/")
     model_paths = model_path.split("/")
@@ -225,6 +216,7 @@ def get_model_name_from_path(model_path):
         return model_paths[-2] + "_" + model_paths[-1]
     else:
         return model_paths[-1]
+
 
 class KeywordsStoppingCriteria(StoppingCriteria):
     def __init__(self, keywords, tokenizer, input_ids):

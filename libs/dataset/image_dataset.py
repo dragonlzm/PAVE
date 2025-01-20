@@ -1,3 +1,5 @@
+# This file is adapted from the LLaVA: https://github.com/haotian-liu/LLaVA, mainly stores the util function for the text preprocessing.
+
 import copy
 from typing import Dict, Optional, Sequence, List
 
@@ -448,7 +450,6 @@ def preprocess_qwen(
     return return_dict
         
 
-
 def preprocess_mpt(
     sources,
     tokenizer: transformers.PreTrainedTokenizer,
@@ -647,7 +648,6 @@ def preprocess_llavaov_qwen(sources, tokenizer: transformers.PreTrainedTokenizer
         input_ids=input_ids,  # tensor(bs x seq_len)
         labels=targets,  # tensor(bs x seq_len)
     )
-
 
 
 def preprocess(

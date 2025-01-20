@@ -1,3 +1,5 @@
+# This script holds all the default value of the constants
+
 CONTROLLER_HEART_BEAT_EXPIRATION = 30
 WORKER_HEART_BEAT_INTERVAL = 15
 

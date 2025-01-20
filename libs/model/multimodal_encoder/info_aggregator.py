@@ -1,3 +1,5 @@
+# This script holds the implementation of information aggregator. 
+
 import math
 import ipdb
 

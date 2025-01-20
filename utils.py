@@ -1,3 +1,5 @@
+# This script holds all the functions for loading the model for training and testing.
+
 import warnings
 import shutil
 import os
@@ -410,10 +412,6 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
                     if not hasattr(cfg_pretrained, key):
                         setattr(cfg_pretrained, key, default_model_arg.__dict__[key])
             
-            # for key in cfg_pretrained.__dict__:
-            #     if not key.startswith('__'):
-            #         print(key)
-            
             # re-instantiate the Video backbone and the SSM
             cfg_pretrained.image_size = default_data_args.image_size
             model.get_model().initialize_vision_modules(
@@ -442,7 +440,6 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
             # if any(k.startswith('model.model.') for k in non_lora_trainables):
             #     non_lora_trainables = {(k[6:] if k.startswith('model.') else k): v for k, v in non_lora_trainables.items()}
             model.load_state_dict(filter_the_state_dict(non_lora_trainables, 'temporal_aggregator'), strict=False)
-
             
             # resize and handle the size of the head
             model.initialize_vision_tokenizer(cfg_pretrained, tokenizer=tokenizer)

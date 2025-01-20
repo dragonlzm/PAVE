@@ -1,36 +1,13 @@
+# This script holds the implementation of the trainner.
+
 import os
 import random
-import warnings
-from collections import defaultdict
-from contextlib import contextmanager, nullcontext
-from copy import deepcopy
-from functools import wraps
 from typing import Any, Callable, Dict, List, Literal, Optional, Tuple, Union
-import numpy as np
-import logging
 import ipdb
 
 import torch
 import torch.nn as nn
 from torch.utils.data import Sampler
-import torch.nn.functional as F
-from torch.utils.data import DataLoader
-
-from accelerate import PartialState
-from accelerate.utils import is_deepspeed_available, tqdm
-from datasets import Dataset
-
-from transformers import (
-    DataCollator,
-    AutoModelForCausalLM,
-    DataCollator,
-    PreTrainedModel,
-    PreTrainedTokenizerBase,
-    Trainer,
-    TrainingArguments,
-)
-from transformers.trainer_callback import TrainerCallback
-from transformers.trainer_utils import EvalLoopOutput
 
 from transformers import Trainer
 from transformers.trainer import (
@@ -47,20 +24,6 @@ from .train_utils import (get_mm_adapter_state_maybe_zero_3,
                          get_peft_state_non_lora_maybe_zero_3_with_state_dict)
 from .import_utils import is_peft_available, is_wandb_available, is_transformers_greater_than
 
-############################ Added for the DPO ######################################################
-
-if is_peft_available():
-    from peft import PeftModel, get_peft_model, prepare_model_for_kbit_training
-
-
-if is_wandb_available():
-    import wandb
-
-if is_deepspeed_available():
-    import deepspeed
-
-
-################################################## Add for the normal training #####################################
 
 def maybe_zero_3(param, ignore_status=False, name=None):
     from deepspeed import zero

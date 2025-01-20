@@ -1,3 +1,5 @@
+# This script contains the util function for handle video loading.
+
 import gc
 import math
 import os
@@ -16,7 +18,6 @@ import torch
 import decord
 from torchvision import get_video_backend
 from torchvision.io.video import _check_av_available
-import torchvision
 import torchvision.transforms as transforms
 
 try:

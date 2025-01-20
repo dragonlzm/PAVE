@@ -1,3 +1,5 @@
+# This file is from LLaVA-OneVision: https://github.com/LLaVA-VL/LLaVA-NeXT
+
 from typing import List, Optional, Tuple, Union
 
 import torch
@@ -137,6 +139,7 @@ class LlavaQwen2ForCausalLM(Qwen2ForCausalLM, LlavaMetaForCausalLM):
         if image_sizes is not None:
             inputs['image_sizes'] = image_sizes
         return inputs
+
 
 AutoConfig.register("llava_qwen2", LlavaQwen2Config)
 AutoModelForCausalLM.register(LlavaQwen2Config, LlavaQwen2ForCausalLM)

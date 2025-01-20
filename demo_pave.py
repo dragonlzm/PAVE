@@ -1,11 +1,4 @@
-# This script aims to inference the model LLaVA and store the prediction into special format which the COCOeval can read
-
-# This script aims to eval the LLaVA-OneVision using the ActivityNet dataset
-# Should put this file under the LLaVA-NeXT folder to run
-# use the following environment:
-# module use /depot/schaterj/data/3d/modules
-# module load conda-env/lla-py3.8.5 
-
+# This script is a demo for runing the PAVE with the PAVE weights.
 
 import argparse
 import torch
@@ -154,7 +147,6 @@ def filter_the_state_dict(state_dict, keyword):
     return new_state_dict
 
 
-
 def load_trained_model_for_eval(model_path, model_base, model_name, 
                                 model_arg_name='default',
                                 data_arg_name='default',
@@ -297,8 +289,6 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
     return tokenizer, model, image_processor, context_len
 
 
-
-
 ####################### load the downloaded checkpoints ####################################
 #the model path for each version
 model_base = 'lmms-lab/llava-onevision-qwen2-7b-ov'
@@ -367,8 +357,6 @@ question = 'please describe the video ?'
 # question = 'What color is the chair in the kitchen?'  
 
 
-
-
 model_name = get_model_name_from_path(model_path)
 tokenizer, model, image_processor, max_length = load_trained_model_for_eval(model_path, model_base, model_name, model_arg_name=model_arg_name)
 model.to('cuda')
@@ -376,8 +364,6 @@ model.to('cuda')
 ### adding back the config 
 model.config.mm_newline_position = 'grid'
 model.config.mm_spatial_pool_mode = 'bilinear'
-
-
 
 # load the video 
 if not os.path.isdir(video_path): 
@@ -451,8 +437,6 @@ if "top_p" not in gen_kwargs:
 if "num_beams" not in gen_kwargs:
     gen_kwargs["num_beams"] = 1
 
-
-
 input_ids = tokenizer_vision_token(prompt, tokenizer, DEFAULT_IMAGE_TOKEN, return_tensors="pt").unsqueeze(0).cuda()
 # tensor([[151644,   8948,    198,   2610,    525,    264,  10950,  17847,     13,
 #     151645,    198, 151644,    872,    198,   -200,    198,    285,    279,
@@ -497,7 +481,6 @@ try:
         # cont = self.model.generate(qwen_input_ids, pad_token_id=pad_token_ids, images=image_tensor, use_cache=self.use_cache, **gen_kwargs)
 except Exception as e:
     raise e
-
 
 outputs = tokenizer.batch_decode(output_ids, skip_special_tokens=True)[0].strip()
 print('outputs:', outputs)

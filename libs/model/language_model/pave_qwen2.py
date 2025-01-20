@@ -1,8 +1,9 @@
+# This script holds the structural implementation of the PAVE.
+
 from typing import List, Optional, Tuple, Union
 
 import torch
 import torch.nn as nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from transformers import AutoConfig, AutoModelForCausalLM, \
                          Qwen2Config, Qwen2ForCausalLM, Qwen2Model
@@ -204,6 +205,7 @@ class PAVEQwen2ForCausalLM(Qwen2ForCausalLM, PAVEMetaForCausalLM):
         if video_sizes is not None:
             inputs['video_sizes'] = video_sizes
         return inputs
+
 
 AutoConfig.register("pave_qwen2", PAVEQwen2Config)
 AutoModelForCausalLM.register(PAVEQwen2Config, PAVEQwen2ForCausalLM)

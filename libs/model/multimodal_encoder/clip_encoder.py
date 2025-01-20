@@ -1,3 +1,5 @@
+# This script is adapted from LLaVA: https://github.com/haotian-liu/LLaVA.
+
 import torch
 import torch.nn as nn
 
@@ -86,7 +88,6 @@ class CLIPVisionTower(nn.Module):
     @property
     def num_patches(self):
         return (self.config.image_size // self.config.patch_size) ** 2
-
 
 
 class CLIPVisionTowerS2(CLIPVisionTower):

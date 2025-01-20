@@ -1,6 +1,4 @@
-"""
-# Adapted from https://huggingface.co/MILVLG/imp-v1-3b/blob/main/vision_encoder.py
-"""
+# This script is adapted from https://huggingface.co/MILVLG/imp-v1-3b/blob/main/vision_encoder.py
 
 from typing import Optional, Tuple, Union, Dict
 from dataclasses import dataclass

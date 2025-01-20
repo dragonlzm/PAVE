@@ -1,5 +1,6 @@
-import json
+# This file holds the function for annotation files loading.
 
+import json
 
 def load_jsonl(save_path):
     with open(save_path, "r") as f:

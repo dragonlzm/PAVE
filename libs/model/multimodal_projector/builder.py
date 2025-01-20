@@ -1,3 +1,5 @@
+# This script holds the builder of the projector.
+
 import torch
 import torch.nn as nn
 import re

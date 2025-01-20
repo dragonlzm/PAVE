@@ -1,6 +1,8 @@
+# This script holds all the Modules building functions.
+
 import os
 from .clip_encoder import CLIPVisionTower, CLIPVisionTowerS2
-from .ssm_temporal_aggregator import PAVEModuleV5
+from .info_aggregator import PAVEModuleV5
 from .siglip_encoder import SigLipVisionTower
 
 
@@ -18,8 +20,6 @@ def build_vision_tower(vision_tower_cfg, **kwargs):
     elif "siglip" in vision_tower:
         return SigLipVisionTower(vision_tower, vision_tower_cfg=vision_tower_cfg, **kwargs) 
     raise ValueError(f"Unknown vision tower: {vision_tower}")
-
-
 
 
 def build_video_tower(video_tower_cfg, **kwargs):

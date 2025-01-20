@@ -1,17 +1,4 @@
-#    Copyright 2023 Haotian Liu
-#
-#    Licensed under the Apache License, Version 2.0 (the "License");
-#    you may not use this file except in compliance with the License.
-#    You may obtain a copy of the License at
-#
-#        http://www.apache.org/licenses/LICENSE-2.0
-#
-#    Unless required by applicable law or agreed to in writing, software
-#    distributed under the License is distributed on an "AS IS" BASIS,
-#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#    See the License for the specific language governing permissions and
-#    limitations under the License.
-
+# This script holds the implementation of the PAVE model.
 
 from abc import ABC, abstractmethod
 
@@ -164,10 +151,6 @@ class PAVEMetaModel:
                 # if pretrain_vision_modules is not None: # if we has the pretrain model then further delay the loading
                 vision_tower.load_model()
 
-                # In case it is frozen by LoRA
-                # for p in self.vision_resampler.parameters():
-                #     p.requires_grad = True
-
             self.config.use_mm_proj = True
             self.config.mm_projector_type = getattr(model_args, "mm_projector_type", "linear")
             # self.config.mm_hidden_size = getattr(vision_resampler, "hidden_size", vision_tower.hidden_size)
@@ -220,13 +203,12 @@ class PAVEMetaModel:
                 # load the newline
                 self.image_newline.load_state_dict(whole_vision_weights['model.image_newline'])
                 print(f'Loaded image_newline weights from {pretrain_vision_modules}.')
-                
-            # ipdb.set_trace() # check the loading
-        
+
         ## handle other config
         self.config.mm_newline_position = model_args.mm_newline_position
         self.config.feat_combine_method = model_args.feat_combine_method
         self.config.train_addition_start_end_tokens = model_args.train_addition_start_end_tokens
+
 
 def unpad_image(tensor, original_size):
     """
@@ -271,7 +253,6 @@ class PAVEMetaForCausalLM(ABC):
     def get_vision_tower(self):
         return self.get_model().get_vision_tower()
 
-
     def encode_videos(self, 
                       video_feats, 
                       q_text_embeds=None, 
@@ -304,7 +285,6 @@ class PAVEMetaForCausalLM(ABC):
         #                                                                    frame_nums=feat_frame_nums,
         #                                                                    diffusion_control_text_embedding=diffusion_text_embedding, 
         #                                                                    diffusion_control_text_embedding_len=q_text_nums)
-        
         video_features = video_feats
         new_frame_num = feat_frame_nums        
         video_features = video_features.permute([0,2,3,4,1]) # [B, C, T, H, W] -> [B, T, H, W, C]
@@ -466,8 +446,6 @@ class PAVEMetaForCausalLM(ABC):
             raise NotImplementedError
             # image_features = self.encode_images(images)
 
-        
-
     def post_processing_of_image_feature(self, image_features, video_idx_in_batch):
         '''
             This function is for some post-processing of the image feature, 
@@ -538,7 +516,6 @@ class PAVEMetaForCausalLM(ABC):
             raise ValueError(f"Unexpected mm_patch_merge_type: {self.config.mm_patch_merge_type}")
         
         return image_features
-
 
     def prepare_inputs_labels_for_multimodal(
                 self,

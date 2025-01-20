@@ -1,8 +1,7 @@
-# Adopted from https://github.com/haotian-liu/LLaVA. 
+# Adopted from https://github.com/haotian-liu/LLaVA. The training entrance.
 import os
 import pathlib
 import torch
-import transformers
 import ipdb
 import sys
 
@@ -17,12 +16,6 @@ from utils import prepare_video_model
 
 def train_pave_func(attn_implementation=None):
     global local_rank
-    # check the model_class name, data_class name and the training_class name
-    # remaining_args, model_arg_class, data_arg_class, training_arg_class = parse_argument_classes(sys.argv[1:])
-
-    # parser = transformers.HfArgumentParser(
-    #     (model_arg_class, data_arg_class, training_arg_class))
-    # model_args, data_args, training_args = parser.parse_args_into_dataclasses(args=remaining_args)
     
     model_args, data_args, training_args = parse_argument_classes(sys.argv[1:])
     

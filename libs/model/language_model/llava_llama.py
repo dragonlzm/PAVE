@@ -69,30 +69,6 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
         image_sizes: Optional[List[List[int]]] = None,
         return_dict: Optional[bool] = None,
     ) -> Union[Tuple, CausalLMOutputWithPast]:
-        ### The input of the function: 
-        # input_ids:           torch.Size([BS, Seq_len]) torch.Size([4, 311]) tensor([    1,   319, 13563,  1546,   263, 12758,  1404,   322,   385, 23116, ..., 0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
-        # attention_mask:      torch.Size([BS, Seq_len]) torch.Size([4, 311]) tensor([True, True, True, True, True, True, True, True, True, True, True, True,..., False, False, False, False, False, False], device='cuda:0')
-        # position_ids:        None
-        # past_key_values:     None
-        # inputs_embeds:       None
-        # labels:              torch.Size([BS, Seq_len]) torch.Size([4, 311]) This is the same as the 'targets' in preprocess (libs\dataset\image_dataset.py) tensor([ -100,  -100,  -100,  -100,  -100,  -100,  -100,  -100,  -100,  -100, ..., 450,  7945,   297, 278,  1967,   338,  4796,   322,  4628, 29889, ..., -100,  -100,  -100, 901, 15075,   475,   519,  970,  8608,   362,  6757, 29889,     2], device='cuda:0')   
-        # use_cache:           None
-        # output_attentions:   None     
-        # output_hidden_states:None   
-        # images:              torch.Size([BS, C, H, W]) torch.Size([4, 3, 224, 224])
-        # image_sizes:         None
-        # return_dict:         None
-        
-        ### the output of the prepare_inputs_labels_for_multimodal (concated with the video feature) 
-        # New_seq_len = Seq_len + Num_of_img_token - 1 = 311 + 256 - 1 = 566
-        # position_ids:       None
-        # attention_mask:     torch.Size([BS, New_seq_len]) torch.Size([4, 566]) paded for the batch Tensor([True, True, True, True, True, True, True, True, True, True, True, True,..., False, False, False, False, False, False], device='cuda:0')
-        # past_key_values:    None
-        # inputs_embeds:      torch.Size([BS, New_seq_len, EmbedDim]) torch.Size([4, 566, 4096])
-        # labels:             torch.Size([BS, New_seq_len]) torch.Size([4, 566]) This is padding 256 -100 for the image tokens tensor([ -100,  -100,  -100,  -100,  -100,  -100,  -100,  -100,  -100,  -100, ..., 450,  7945,   297, 278,  1967,   338,  4796,   322,  4628, 29889, ..., -100,  -100,  -100, 901, 15075,   475,   519,  970,  8608,   362,  6757, 29889,     2], device='cuda:0')   
-        # use_cache:          None
-        # output_attentions:  None
-        # return_dict:        None
 
         if inputs_embeds is None:
             (
@@ -177,6 +153,7 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
         if image_sizes is not None:
             inputs['image_sizes'] = image_sizes
         return inputs
+
 
 AutoConfig.register("llava_llama", LlavaConfig)
 AutoModelForCausalLM.register(LlavaConfig, LlavaLlamaForCausalLM)

@@ -1,7 +1,7 @@
+# This script holds the implementation of the projector.
+
 import torch
 import torch.nn as nn
-
-import math
 
 from transformers.models.clip.modeling_clip import CLIPVisionModel
 

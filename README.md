@@ -139,4 +139,5 @@ WANDB__SERVICE_WAIT=500 deepspeed --master_port 60000 train_pave_w_feat.py \
 ```
 
 # Notes
-1. we do minor twist in the libs\model\multimodal_encoder\blocks.py to fix the output of the function unpad_input caused by the flash-attn version 2.7.3
+1. we do minor twist in the libs\model\multimodal_encoder\blocks.py to fix the output of the function unpad_input caused by the flash-attn version 2.7.3.
+2. change the "temporal_aggregator_type": "pmv5" in config.json in python, this is caused by renaming of the information aggregation module.

@@ -1,3 +1,5 @@
+# This script contains all the implementation for the training dataset.
+
 import os
 import copy
 from dataclasses import dataclass, field
@@ -10,133 +12,20 @@ import numpy as np
 import math
 from copy import deepcopy
 
-import decord
-from decord import VideoReader, cpu
-
 from einops import rearrange, repeat
 import torch
 from torch.utils.data import Dataset
-from torch.nn.utils.rnn import pad_sequence
 import transformers
-import torchvision
 
 from ..constants import IGNORE_INDEX, VID_EXTENSIONS, IMG_EXTENSIONS
 from ..utils.train_utils import DataArguments, rank0_print
 from .image_dataset import preprocess_multimodal, preprocess, preprocess_qwen, preprocess_video_multimodal
-from .video_dataset import read_video, temporal_random_crop, get_transforms_video, fps_base_temporal_sampling, frame_base_temporal_sampling, process_video_with_decord
+from .video_loading_utils import read_video, temporal_random_crop, get_transforms_video, fps_base_temporal_sampling, frame_base_temporal_sampling, process_video_with_decord
 from .dataset_utils import load_data
 
 
-class LazySupervisedDataset(Dataset):
-    """Dataset for supervised fine-tuning."""
-
-    def __init__(self, data_path: str,
-                 tokenizer: transformers.PreTrainedTokenizer,
-                 data_args: DataArguments):
-        super(LazySupervisedDataset, self).__init__()
-        list_data_dict = json.load(open(data_path, "r"))
-
-        rank0_print("Formatting inputs...Skip in lazy mode")
-        self.tokenizer = tokenizer
-        self.list_data_dict = list_data_dict
-        self.data_args = data_args
-
-    def __len__(self):
-        return len(self.list_data_dict)
-
-    @property
-    def lengths(self):
-        length_list = []
-        for sample in self.list_data_dict:
-            img_tokens = 128 if 'image' in sample else 0
-            length_list.append(sum(len(conv['value'].split()) for conv in sample['conversations']) + img_tokens)
-        return length_list
-
-    @property
-    def modality_lengths(self):
-        length_list = []
-        for sample in self.list_data_dict:
-            cur_len = sum(len(conv['value'].split()) for conv in sample['conversations'])
-            cur_len = cur_len if 'image' in sample else -cur_len
-            length_list.append(cur_len)
-        return length_list
-
-    def __getitem__(self, i) -> Dict[str, torch.Tensor]:
-        sources = self.list_data_dict[i]
-        if isinstance(i, int):
-            sources = [sources]
-        assert len(sources) == 1, "Don't know why it is wrapped to a list"  # FIXME
-        if 'image' in sources[0]:
-            image_file = self.list_data_dict[i]['image']
-            image_folder = self.data_args.image_folder
-            processor = self.data_args.image_processor
-            image = Image.open(os.path.join(image_folder, image_file)).convert('RGB')
-            if self.data_args.image_aspect_ratio == 'pad':
-                def expand2square(pil_img, background_color):
-                    width, height = pil_img.size
-                    if width == height:
-                        return pil_img
-                    elif width > height:
-                        result = Image.new(pil_img.mode, (width, width), background_color)
-                        result.paste(pil_img, (0, (width - height) // 2))
-                        return result
-                    else:
-                        result = Image.new(pil_img.mode, (height, height), background_color)
-                        result.paste(pil_img, ((height - width) // 2, 0))
-                        return result
-                image = expand2square(image, tuple(int(x*255) for x in processor.image_mean))
-                image = processor.preprocess(image, return_tensors='pt')['pixel_values'][0]
-            else:
-                image = processor.preprocess(image, return_tensors='pt')['pixel_values'][0]
-            sources = preprocess_multimodal(
-                copy.deepcopy([e["conversations"] for e in sources]),
-                self.data_args)
-        else:
-            sources = copy.deepcopy([e["conversations"] for e in sources])
-        data_dict = preprocess(
-            sources,
-            self.tokenizer,
-            has_vision=('image' in self.list_data_dict[i]))
-        if isinstance(i, int):
-            data_dict = dict(input_ids=data_dict["input_ids"][0],
-                             labels=data_dict["labels"][0])
-
-        # image exist in the data
-        if 'image' in self.list_data_dict[i]:
-            data_dict['image'] = image
-        elif self.data_args.is_multimodal:
-            # image does not exist in the data, but the model is multimodal
-            crop_size = self.data_args.image_processor.crop_size
-            data_dict['image'] = torch.zeros(3, crop_size['height'], crop_size['width'])
-        return data_dict
-
-
-def load_video_vae_feature(video_feat_file_path, sources, original_fps, training_feat_fps, min_frame_num=None):
-    # video_feat_file_path = os.path.join(video_feat_file_path)
-    try:
-        video_feat = torch.load(video_feat_file_path).squeeze(dim=0)  # torch.Size([1, 4, 20, 28, 28]) ->  torch.Size([4, 20, 28, 28]) (C, T, H, W)
-    except:
-        print('video_feat_file_path:', video_feat_file_path, 'data info:', sources)
-        torch.save({'video_feat_file_path:': video_feat_file_path, 'data info:': sources}, 'datat_error_' + str(time.time) + '.pt')
-        raise NotImplementedError
-    # video_fps = self.original_feat_fps  # default fps
-    # further downsample the feature if the feature is too long in T axis
-    if training_feat_fps != original_fps:
-        video_feat, frame_num, final_fps = fps_base_temporal_sampling(video_feat.permute([1, 0, 2, 3]), 
-                                                                      original_fps, 
-                                                                      target_fps=training_feat_fps, 
-                                                                      video_feat_file_path=video_feat_file_path,
-                                                                      min_frame_num=min_frame_num) # (C, T, H, W) -> (T, C, H, W) -> (C, T, H, W)
-        video_feat = video_feat.permute([1, 0, 2, 3])
-        video_feat_fps = final_fps
-    else:
-        video_feat_fps = original_fps
-    
-    return video_feat, video_feat_fps
-
-
 def load_images_from_folder(folder_path):
-    # ipdb.set_trace()
+    # This script aims to load the extracted video from the scannet dataset
     # try loading the npy files
     npy_file_path = os.path.join(folder_path, 'stacked_images.npy')
     if os.path.exists(npy_file_path):
@@ -182,7 +71,6 @@ def load_images_from_folder(folder_path):
     else:
         print("No JPG images found in the specified folder.")
         return None
-
 
 
 class LazySupervisedVideoDataset(Dataset):
@@ -297,23 +185,6 @@ class LazySupervisedVideoDataset(Dataset):
     def __len__(self):
         return len(self.list_data_dict)
 
-    # @property
-    # def lengths(self):
-    #     length_list = []
-    #     for sample in self.list_data_dict:
-    #         img_tokens = 128 if 'video' in sample else 0
-    #         length_list.append(sum(len(conv['value'].split()) for conv in sample['conversations']) + img_tokens)
-    #     return length_list
-
-    # @property
-    # def modality_lengths(self):
-    #     length_list = []
-    #     for sample in self.list_data_dict:
-    #         cur_len = sum(len(conv['value'].split()) for conv in sample['conversations'])
-    #         cur_len = cur_len if 'video' in sample else -cur_len
-    #         length_list.append(cur_len)
-    #     return length_list
-
     def get_type(self, path):
         ext = os.path.splitext(path)[-1].lower()
         if ext.lower() in VID_EXTENSIONS:
@@ -372,59 +243,13 @@ class LazySupervisedVideoDataset(Dataset):
         if 'video' in sources[0]:
             # load feature
             # ipdb.set_trace() # check the video loading
-            if self.use_fast: # This is for a special test which directly load the video frames as the video feature
+            if self.use_fast: # This is for directly loading the side-channel information for training.
                 # TODO: different fast backbone need different loading strategy, we need to implement this part later
                 raise NotImplementedError
-                # try:
-                #     video_file_path = self.list_data_dict[i]['feat_path']
-                #     # TODO: change this temporate change
-                #     # ipdb.set_trace() # check the loading
-                #     temp_args = deepcopy(self.data_args)
-                #     temp_args.video_fps = 1 # select the frame in 4 fps
-                #     temp_args.frames_upbound = 0
-                #     min_frame_num = 32
-                    
-                #     # load the video and select the frames
-                #     video, video_time, frame_time, num_frames_to_sample = process_video_with_decord(video_file_path, temp_args, min_frame_num=min_frame_num) # (653, 720, 1280, 3)
-                #     video = torch.tensor(video).permute([0, 3, 1, 2]) # T H W C -> T C H W
-                #     # preprocessing of the frames
-                #     transform = get_transforms_video(self.data_args.transform_name, self.data_args.image_size) 
-                #     # ipdb.set_trace()
-                    
-                #     if len(video) > 100:
-                #         all_res = []
-                #         start = 0
-                #         end = 1
-                #         while start * 100 < len(video):
-                #             curr_chunks = video[start*100:end*100]
-                #             curr_chunks = transform(curr_chunks)
-                #             all_res.append(curr_chunks)
-                #             start += 1
-                #             end += 1
-                #         video = torch.cat(all_res, dim=0)
-                #     else:
-                #         video = transform(video) # image: torch.Size([32, 3, 224, 224]) T, C, H, W -> C, T, H, W
-                #     video_feat = video.permute([1,0,2,3]) # T, C, H, W -> C, T, H, W
-                #     # ipdb.set_trace() # check size of the size of the image # expect (C, T, H, W)
-
-                #     # papare other params
-                #     video_feat_fps = temp_args.video_fps
-                #     feat_frame_num = video_feat.shape[1] # expect (C, T, H, W)
-                # except Exception as e:
-                #     print(f"Error: {e}")
-                #     print(f"Failed to read video file: {video_file_path}")
-                #     return self._get_item(i + 1)
             elif self.use_fast_feat: # This is for loading the fast features
                 # load the video
                 video_feat_file_path = self.list_data_dict[i]['feat_path']
-                if self.fast_feat_type == 'video_vae':
-                    video_feat, video_feat_fps = load_video_vae_feature(video_feat_file_path, sources, 
-                                                                        self.data_args.original_feat_fps, 
-                                                                        self.data_args.training_feat_fps,
-                                                                        min_frame_num=self.data_args.min_fast_frame_num if hasattr(self.data_args, 'min_fast_frame_num') else None)
-                    feat_frame_num = video_feat.shape[1]
-                    # video_feat should be in the shape of (C, T, H, W)
-                elif self.fast_feat_type == 'languagebind' or self.fast_feat_type == 'languagebind_14x14' or self.fast_feat_type == 'internvideo2' or self.fast_feat_type == 'siglip':
+                if self.fast_feat_type == 'languagebind' or self.fast_feat_type == 'languagebind_14x14' or self.fast_feat_type == 'internvideo2' or self.fast_feat_type == 'siglip':
                     # ipdb.set_trace() # check the loading
                     # load the feature 
                     video_feat = torch.load(video_feat_file_path, map_location=torch.device('cpu')) # torch.Size([280, 5, 1024]) T, C, D / torch.Size([32, 196, 1024]) / torch.Size([280, 4, 1024])
@@ -496,7 +321,7 @@ class LazySupervisedVideoDataset(Dataset):
                         print(f"Error: {e}")
                         print(f"Failed to read video file: {video_file_path}")
                         return self._get_item(i + 1)
-            elif self.use_slow_feat: # load the video feature
+            elif self.use_slow_feat: # load the preextracted the feature
                 # ipdb.set_trace() # check the loading of the slow
                 video_file_path = self.list_data_dict[i]['video_path']
                 image = torch.load(video_file_path)
@@ -549,40 +374,6 @@ class LazySupervisedVideoDataset(Dataset):
             
         # ipdb.set_trace()
         return data_dict        
-
-
-@dataclass
-class DataCollatorForSupervisedDataset(object):
-    """Collate examples for supervised fine-tuning."""
-
-    tokenizer: transformers.PreTrainedTokenizer
-
-    def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
-        input_ids, labels = tuple([instance[key] for instance in instances]
-                                  for key in ("input_ids", "labels"))
-        input_ids = torch.nn.utils.rnn.pad_sequence(
-            input_ids,
-            batch_first=True,
-            padding_value=self.tokenizer.pad_token_id)
-        labels = torch.nn.utils.rnn.pad_sequence(labels,
-                                                 batch_first=True,
-                                                 padding_value=IGNORE_INDEX)
-        input_ids = input_ids[:, :self.tokenizer.model_max_length]
-        labels = labels[:, :self.tokenizer.model_max_length]
-        batch = dict(
-            input_ids=input_ids,
-            labels=labels,
-            attention_mask=input_ids.ne(self.tokenizer.pad_token_id),
-        )
-
-        if 'image' in instances[0]:
-            images = [instance['image'] for instance in instances]
-            if all(x is not None and x.shape == images[0].shape for x in images):
-                batch['images'] = torch.stack(images)
-            else:
-                batch['images'] = images
-
-        return batch
 
 
 @dataclass
@@ -662,18 +453,6 @@ class DataCollatorForSupervisedVideoDataset(object):
         return batch
 
 
-def make_supervised_data_module(tokenizer: transformers.PreTrainedTokenizer,
-                                data_args) -> Dict:
-    """Make dataset and collator for supervised fine-tuning."""
-    train_dataset = LazySupervisedDataset(tokenizer=tokenizer,
-                                data_path=data_args.data_path,
-                                data_args=data_args)
-    data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
-    return dict(train_dataset=train_dataset,
-                eval_dataset=None,
-                data_collator=data_collator)
-
-
 def make_video_supervised_data_module(tokenizer: transformers.PreTrainedTokenizer,
                                         data_args) -> Dict:
     """Make dataset and collator for supervised fine-tuning."""
@@ -685,7 +464,6 @@ def make_video_supervised_data_module(tokenizer: transformers.PreTrainedTokenize
     return dict(train_dataset=train_dataset,
                 eval_dataset=None,
                 data_collator=data_collator)
-
 
 
 def load_annotation_and_filter(anno_path, fast_path_mapping_path, data_root, 

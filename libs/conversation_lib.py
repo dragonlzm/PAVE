@@ -1,3 +1,5 @@
+#  This script adapted from LLaVA: https://github.com/haotian-liu/LLaVA/tree/main/llava, and holds all text templates
+
 import dataclasses
 from enum import auto, Enum
 from typing import List, Tuple, Any, Union
@@ -468,7 +470,6 @@ Answer the questions.""",
     sep="<|im_end|>",
 )
 
-
 conv_Qwen2Tokenizer = Conversation(
     system="<|im_start|>system\nYou are a helpful assistant.",
     roles=("<|im_start|>user\n", "<|im_start|>assistant\n"),
@@ -478,7 +479,6 @@ conv_Qwen2Tokenizer = Conversation(
     sep_style=SeparatorStyle.MPT,
     sep="<|im_end|>\n",
 )
-
 
 conv_Qwen2TokenizerV2 = Conversation(
     system="<|im_start|>system\nYou are a helpful assistant, a large vision-language assistant. You are able to understand the video content that the user provides, and assist the user with a variety of tasks using natural language. Follow the instructions carefully and explain your answers in detail based on the provided video.",
@@ -501,12 +501,6 @@ You are a helpful assistant.""",
     sep_style=SeparatorStyle.CHATML,
     sep="<|im_end|>",
 )
-
-
-# messages = [
-#     {"role": "system", "content": "You are a helpful assistant."},
-#     {"role": "user", "content": prompt}
-# ]
 
 
 default_conversation = conv_vicuna_v1

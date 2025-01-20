@@ -1,3 +1,5 @@
+# This script hold all the implementation of transformer or ResNet blocks.
+
 import copy
 import ipdb
 from typing import Optional, List
@@ -52,7 +54,6 @@ def rotate_half(x):
     return torch.cat((-x2, x1), dim=-1)
 
 
-
 def apply_multimodal_rotary_pos_emb(input, cos, sin, position_ids, mrope_section, unsqueeze_dim=1):
     """Applies Rotary Position Embedding with Multimodal Sections to the query and key tensors (https://qwenlm.github.io/blog/qwen2-vl/).
         This function is base modified base on the function from the Qwen2-VL
@@ -100,7 +101,6 @@ def apply_multimodal_rotary_pos_emb(input, cos, sin, position_ids, mrope_section
     input_embed = (input * cos) + (rotate_half(input) * sin)
     # k_embed = (k * cos) + (rotate_half(k) * sin)
     return input_embed
-
 
 
 class VideoCrossAttentionWith3DRope(nn.Module):
@@ -183,7 +183,6 @@ class VideoCrossAttentionWith3DRope(nn.Module):
             # directly select from the cube along the temporal axis
             fast_frames_idx = idx_cube[:, H_fast_index][:,:, W_fast_index] # T_k, h_k, w_k, 3
             
-            
             # flatten the dimension to 1d (3, B, len)
             fast_frames_idx = fast_frames_idx.view(-1, 3).permute([1, 0]).unsqueeze(dim=1) # which is the key
             slow_frames_idx = slow_frames_idx.view(-1, 3).permute([1, 0]).unsqueeze(dim=1) # which is the query
@@ -213,7 +212,6 @@ class VideoCrossAttentionWith3DRope(nn.Module):
             k = rearrange(k, 'B H (n T) S D -> (B n) H (T S) D', n=T_q)
             v = rearrange(v, 'B H (T S) D -> B H T S D', T=T_k)
             v = rearrange(v, 'B H (n T) S D -> (B n) H (T S) D', n=T_q)            
-            
             # additional param for mask
             attn_mask = None
             # T = max_len_of_all_chunks
@@ -318,8 +316,6 @@ class VideoCrossAttentionWith3DRope(nn.Module):
             x = rearrange(x, '(t s) h d -> t s (h d)', t=T_q).unsqueeze(dim=0) # (B, T_q, S_q, C) should be the query tokens
         # ipdb.set_trace() # save the result
         return x    
-
-
 
 
 class DecoderVideoCrossAttention(nn.Module):
@@ -584,10 +580,8 @@ class DecoderLayer(nn.Module):
         return query
 
 
-
 #### The following is from the slow-fast module
 # Referemce: https://github.com/facebookresearch/SlowFast/tree/main
-
 class ResNetBasicStem(nn.Module):
     """
     ResNe(X)t 3D stem module.
@@ -969,6 +963,7 @@ class ResBlock(nn.Module):
             x = x + f_x
         x = self.relu(x)
         return x
+
 
 def get_trans_func(name):
     """
