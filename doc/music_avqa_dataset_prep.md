@@ -3,11 +3,13 @@
 ## Download the training / test annotations and videos
 You can download the training / test annotations and videos from [Music-AVQA](https://gewu-lab.github.io/MUSIC-AVQA/).
 
-## Convert the training annotation 
-You need to convert the raw training annotation into instruction tuning dataset. 
-1. run the tools/audio/music-avqa/clean_and_check_the_annotation.py to clean the annotation.
-2. run the tools/audio/music-avqa/convert_annotation_to_training_format_duplicate_audio_related.py to conver the annotation to insturction tuning dataset.
+## Convert the training annotations 
+You need to convert the raw training annotations into instruction tuning dataset. 
+1. run the tools/audio/music-avqa/clean_and_check_the_annotation.py to clean the annotations.
+2. run the tools/audio/music-avqa/convert_annotation_to_training_format_duplicate_audio_related.py to conver the annotations to insturction tuning dataset.
 
+## Convert the test annotations 
+run the tools/audio/music-avqa/clean_and_check_the_annotation.py to clean the annotations.
 
 ## Extract the audio feature from .mp3 files
 1. Prepare the ImageBind environment following the instruction [here](https://github.com/facebookresearch/ImageBind).

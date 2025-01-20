@@ -1,42 +1,6 @@
 # This scrip is for checking the annotation of the model
 # refine the question by replace the template with the question.
 
-# import json
-# import ast
-# test = json.load(open('/depot/schaterj/data/3d/work_dir/zhuoming_temp/run_llama/data/video_instruction_tuning/music_avqa/avqa-test.json'))
-
-
-# for ele in test:
-#     the_template_value = ele['templ_values']
-#     the_template_value = ast.literal_eval(the_template_value)   
-#     if len(the_template_value)>=1:
-#         print(ele['question_content'], the_template_value)
-
-
-# import re
-
-# def extract_templates(strings):
-#     templates = set()
-#     for string in strings:
-#         matches = re.findall(r'<(.*?)>', string)
-#         templates.update(matches)
-#     return templates
-
-# # Example usage
-# strings = [ele['question_content'] for ele in test]
-
-# templates = extract_templates(strings)
-# print("Extracted templates:", templates)
-
-# # {'BA', 'LRer', 'TH', 'LL', 'FL', 'LR', 'Object'}
-
-# all_distinct_answer = [ele['anser'] for ele in test]
-# all_distinct_answer = list(set(all_distinct_answer))
-
-
-# 'accordion,acoustic_guitar,bagpipe,banjo,bassoon,cello,clarinet,congas,drum,eight,electric_bass,erhu,five,flute,four,guzheng,indoor,left,middle,more than ten,nine,no,one,outdoor,piano,pipa,right,saxophone,seven,simultaneously,six,suona,ten,three,trumpet,tuba,two,ukulele,violin,xylophone,yes,zero'
-# >>> all_distinct_answer
-# ['accordion', 'acoustic_guitar', 'bagpipe', 'banjo', 'bassoon', 'cello', 'clarinet', 'congas', 'drum', 'eight', 'electric_bass', 'erhu', 'five', 'flute', 'four', 'guzheng', 'indoor', 'left', 'middle', 'more than ten', 'nine', 'no', 'one', 'outdoor', 'piano', 'pipa', 'right', 'saxophone', 'seven', 'simultaneously', 'six', 'suona', 'ten', 'three', 'trumpet', 'tuba', 'two', 'ukulele', 'violin', 'xylophone', 'yes', 'zero']
 
 import re
 import json
