@@ -48,7 +48,7 @@ pip install rotary-embedding-torch
 ### Audio-Visual
 
 | Dataset | Base Model | Schedule | Checkpoint | AVSD (CIDEr) | Music-AVQA (Audio Acc) | Music-AVQA (Visual Acc) | Music-AVQA (Audio-Visual Acc) | Music-AVQA (Overall Acc) |
-|----------|----------|-----------|-----------|---|---|---|---|---|---|
+|----------|----------|-----------|-----------|---|---|---|---|---|
 | AVSD | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 1e | [pave_v5_1_3_lora_avsd](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_avsd.zip) | 134.2 | - | - | - | - |
 | AVSD | [LLaVA-OneVision-7B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-7b-ov)     | 1e | [pave_v5_1_3_lora_avsd_7B](https://huggingface.co/zhuomingliu/PAVE/blob/main/pave_v5_1_3_lora_avsd_7B.zip) | 152.9 | - | - | - | - | 
 | Music-AVQA | [LLaVA-OneVision-0.5B](https://huggingface.co/lmms-lab/llava-onevision-qwen2-0.5b-ov) | 2e | Coming Soon | - | ? | ? | ? | ? |
