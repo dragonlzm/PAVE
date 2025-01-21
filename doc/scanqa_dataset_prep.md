@@ -5,7 +5,7 @@
 2. Evenly extract the 32 RGB frames and depth frames from the raw files (TODO: sample scripts).
 
 ## Convert the training annotations 
-You need to convert the raw training annotations into instruction tuning dataset. Please refer to file tools/3d/scanqa/convert_annotation_to_training_format.py
+You need to convert the raw training annotations into instruction tuning dataset. Please refer to file tools/3d/scanqa/convert_annotation_to_training_format.py. You can also download the processed annotations and video mapping files from [here](https://huggingface.co/datasets/zhuomingliu/PAVEDataset/tree/main/annotations/3d).
 
 ## Convert the test annotations 
 You need to convert the raw test annotations into test format. Please refer to file tools/3d/scanqa/build_scanqa_val_answer_file.py and tools/3d/scanqa/build_scanqa_val_answer_file.py 

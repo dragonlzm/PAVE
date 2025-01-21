@@ -5,10 +5,10 @@
 2. Evenly extract the 32 RGB frames and depth frames from the raw files (TODO: sample scripts).
 
 ## Convert the training annotation 
-You need to convert the raw training annotation into instruction tuning dataset. Please refer to file tools/3d/sqa3d/create_sqa3d_training_annotations.py
+You need to convert the raw training annotation into instruction tuning dataset. Please refer to file tools/3d/sqa3d/create_sqa3d_training_annotations.py. You can also download the processed annotations and video mapping files from [here](https://huggingface.co/datasets/zhuomingliu/PAVEDataset/tree/main/annotations/3d).
 
 ## Convert the test annotations 
-You need to convert the raw test annotations into test format. Please refer to file tools/3d/sqa3d/create_sqa3d_eval_annotations.py
+You need to convert the raw test annotations into test format. Please refer to file tools/3d/sqa3d/create_sqa3d_eval_annotations.py.
 
 ## Extract the 3d feature from video frames and depth files
 1. Prepare the LLaVA-3D environment following the instruction [here](https://github.com/ZCMax/LLaVA-3D). 

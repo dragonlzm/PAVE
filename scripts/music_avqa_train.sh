@@ -2,8 +2,8 @@ WANDB__SERVICE_WAIT=500 deepspeed --master_port 60000 train_pave_w_feat.py \
     --deepspeed ./scripts/zero2.json \
     --lora_enable True \
     --annotation_path ./data/video_instruction_tuning/music_avqa/music_avqa_train_instruct_duplicate_audio.json \
-    --fast_path_mapping_path ./data/video_instruction_tuning/music_avqa/all_imagebind_feature_mapping.json \
-    --slow_path_mapping_path ./data/video_instruction_tuning/music_avqa/all_videos_mapping.json \
+    --fast_path_mapping_path ./data/video_instruction_tuning/music_avqa/music_avqa_all_imagebind_feature_mapping.json \
+    --slow_path_mapping_path ./data/video_instruction_tuning/music_avqa/music_avqa_all_videos_mapping.json \
     --data_root ./data/video_instruction_tuning/music_avqa \
     --slow_path_data_root ./data/video_instruction_tuning/music_avqa \
     --use_fast_feat True \

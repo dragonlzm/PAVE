@@ -13,10 +13,10 @@ You can download the test annnotation from [AVSD-test](https://drive.google.com/
 You can download the test video from [Charades-test](https://ai2-public-datasets.s3-us-west-2.amazonaws.com/charades/Charades_vu17_test.tar).
 
 ## Convert the training annotations 
-You need to convert the raw training annotations into instruction tuning dataset. Please refer to file tools\audio\avsd\convert_annotation_to_training_format.py
+You need to convert the raw training annotations into instruction tuning dataset. Please refer to file tools\audio\avsd\convert_annotation_to_training_format.py. You can also download the processed annotations and video mapping files from [here](https://huggingface.co/datasets/zhuomingliu/PAVEDataset/tree/main/annotations/audio).
 
 ## Convert the test annotations 
-You need to convert the raw test annotations into evaluation format. Please refer to file tools\audio\avsd\convert_test_annotation_to_eval_format.py
+You need to convert the raw test annotations into evaluation format. Please refer to file tools\audio\avsd\convert_test_annotation_to_eval_format.py. 
 
 ## Extract the audio feature from .mp3 files
 1. Prepare the ImageBind environment following the instruction [here](https://github.com/facebookresearch/ImageBind).

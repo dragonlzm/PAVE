@@ -454,11 +454,6 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
     vision_tower = model.get_vision_tower()
     if vision_tower is not None:
         image_processor = vision_tower.image_processor
-    
-    ### TODO: handle the special tokens
-    if 'mplug' in  model_name.lower():
-        print('adding additional token for mplug')
-        tokenizer.add_tokens([DEFAULT_IMAGE_TOKEN], special_tokens=True)
 
     if hasattr(model.config, "max_sequence_length"):
         context_len = model.config.max_sequence_length

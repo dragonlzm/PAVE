@@ -2,8 +2,8 @@ WANDB__SERVICE_WAIT=500 deepspeed --master_port 60000 train_pave_w_feat.py \
     --deepspeed ./scripts/zero2.json \
     --lora_enable True \
     --annotation_path ./data/video_instruction_tuning/scannet/sqa3q_ScanQA_format/SQA_train_instruct.json \
-    --fast_path_mapping_path ./data/video_instruction_tuning/scannet/from_scan_id_to_video_feature.json \
-    --slow_path_mapping_path ./data/video_instruction_tuning/scannet/from_scan_id_to_video_folder.json \
+    --fast_path_mapping_path ./data/video_instruction_tuning/scannet/scannet_from_scan_id_to_video_feature.json \
+    --slow_path_mapping_path ./data/video_instruction_tuning/scannet/scannet_from_scan_id_to_video_folder.json \
     --data_root ./data/video_instruction_tuning/scannet/video_features_new \
     --slow_path_data_root ./data/video_instruction_tuning/scannet/posed_images_new \
     --use_fast_feat True \

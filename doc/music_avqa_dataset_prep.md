@@ -7,6 +7,7 @@ You can download the training / test annotations and videos from [Music-AVQA](ht
 You need to convert the raw training annotations into instruction tuning dataset. 
 1. run the tools/audio/music-avqa/clean_and_check_the_annotation.py to clean the annotations.
 2. run the tools/audio/music-avqa/convert_annotation_to_training_format_duplicate_audio_related.py to conver the annotations to insturction tuning dataset.
+You can also download the processed annotations and video mapping files from [here](https://huggingface.co/datasets/zhuomingliu/PAVEDataset/tree/main).
 
 ## Convert the test annotations 
 run the tools/audio/music-avqa/clean_and_check_the_annotation.py to clean the annotations.

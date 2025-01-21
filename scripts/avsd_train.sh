@@ -2,8 +2,8 @@ WANDB__SERVICE_WAIT=500 deepspeed --master_port 60000 train_pave_w_feat.py \
     --deepspeed ./scripts/zero2.json \
     --lora_enable True \
     --annotation_path ./data/video_instruction_tuning/avsd/avsd_train_instruct.json  \
-    --fast_path_mapping_path ./data/video_instruction_tuning/avsd/all_feats_mapping.json \
-    --slow_path_mapping_path ./data/video_instruction_tuning/avsd/all_videos_mapping.json \
+    --fast_path_mapping_path ./data/video_instruction_tuning/avsd/avsd_all_feats_mapping.json \
+    --slow_path_mapping_path ./data/video_instruction_tuning/avsd/avsd_all_videos_mapping.json \
     --data_root ./data/video_instruction_tuning/avsd/Charades_v1_audio_imagebind_feat \
     --slow_path_data_root ./data/video_instruction_tuning/avsd/Charades_v1_480 \
     --use_fast_feat True \

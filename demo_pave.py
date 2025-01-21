@@ -240,14 +240,6 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
                     non_lora_trainables = {(k[6:] if k.startswith('model.') else k): v for k, v in non_lora_trainables.items()}
                 model.load_state_dict(filter_the_state_dict(non_lora_trainables, 'temporal_aggregator'), strict=False)
                 
-                # handle the special case for the mplug-owl3
-                if 'mplug' in model_name.lower():
-                    print('loading additional param for the mplug.')
-                    additional_params_1 = filter_the_state_dict(non_lora_trainables, 'self_attn.v_kv_proj')
-                    model.load_state_dict(additional_params_1, strict=False)
-                    additional_params_2 = filter_the_state_dict(non_lora_trainables, 'self_attn.gate_proj')
-                    model.load_state_dict(additional_params_2, strict=False)                
-                # ipdb.set_trace() # check the loading of the mplug-owl3 
             from peft import PeftModel
             print('Loading LoRA weights...')
             model = PeftModel.from_pretrained(model, model_path)
@@ -276,10 +268,6 @@ def load_trained_model_for_eval(model_path, model_base, model_name,
     if vision_tower is not None:
         image_processor = vision_tower.image_processor
     
-    ### TODO: handle the special tokens
-    if 'mplug' in  model_name.lower():
-        print('adding additional token for mplug')
-        tokenizer.add_tokens([DEFAULT_IMAGE_TOKEN], special_tokens=True)    
     if hasattr(model.config, "max_sequence_length"):
         context_len = model.config.max_sequence_length
     else:
