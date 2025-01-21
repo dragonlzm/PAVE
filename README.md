@@ -8,18 +8,14 @@
 - [Train](#train)
 - [Evaluation](#evaluation)
 
-<!-- - [Model Zoo](https://github.com/haotian-liu/LLaVA/blob/main/docs/MODEL_ZOO.md) -->
-<!-- - [Dataset](https://github.com/haotian-liu/LLaVA/blob/main/docs/Data.md) -->
-
-
 
 ## Install
 
 We install this environment on Linux machine:
 1. Clone the repository and navigate to PAVE folder 
 ```
-git clone https://github.com/dragonlzm/PAVE_test.git
-cd PAVE_test
+git clone https://github.com/dragonlzm/PAVE.git
+cd PAVE
 ```
 
 2. Install Packages
@@ -36,6 +32,7 @@ pip install rotary-embedding-torch
 
 
 ## PAVE Weights
+We includes all the PAVE weights for different tasks in this section.
 ### 1. 3D-QA
 
 | Dataset | Base Model | Schedule | Checkpoint | ScanQA (C) | ScanQA (B-4) | ScanQA (M) | ScanQA (R) | ScanQA (EM@1) | SQA3D (EM@1)
@@ -64,6 +61,8 @@ pip install rotary-embedding-torch
 
 
 ## Datasets
+We include the instructions for preparing different datasets for the PAVE training and evaluation in this section.
+
 ### 1. ScanQA
 Please refer to [ScanQA_Prepare](./doc/scanqa_dataset_prep.md) for more information.
 
@@ -79,16 +78,45 @@ Please refer to [Music-AVQA_Prepare](./doc/music_avqa_dataset_prep.md) for more 
 ### 5. LLaVA-Video
 Please refer to [LLaVA-Video_Prepare](./doc/llava_video_dataset_prep.md) for more information.
 
-### Prepare the feature by yourself
-
-### Pre-extracted features
-
-
 ## Demo
+Coming Soon.
 
 ## Train
+We provide the sample training scripts in this section.
+### 1. ScanQA
+Please refer to [ScanQA_Train](./scripts/scanqa_train.sh) for more information.
+
+### 2. SQA3D
+Please refer to [SQA3D_Train](./scripts/sqa3d_train.sh) for more information.
+
+### 3. AVSD
+Please refer to [AVSD_Train](./scripts/avsd_train.sh) for more information.
+
+### 4. Music-AVQA
+Please refer to [Music-AVQA_Train](./scripts/music_avqa_train.sh) for more information.
+
+### 5. Enhanced Video
+Please refer to [Enhanced_video_Train](./scripts/enhanced_video.sh) for more information.
+
 
 ## Evaluation
+We provide the sample evaluation scripts in this section.
+
+### 1. ScanQA
+Please refer to [ScanQA_Eval]() for more information.
+
+### 2. SQA3D
+Please refer to [SQA3D_Eval]() for more information.
+
+### 3. AVSD
+Please refer to [AVSD_Eval]() for more information.
+
+### 4. Music-AVQA
+Please refer to [Music-AVQA_Eval]() for more information.
+
+### 5. LLaVA-Video
+Please refer to [LLaVA-Video_Eval]() for more information.
+
 
 ## Personal Notes
 1. we do minor twist in the libs\model\multimodal_encoder\blocks.py to fix the output of the function unpad_input caused by the flash-attn version 2.7.3.

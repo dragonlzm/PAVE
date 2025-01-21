@@ -1,9 +1,5 @@
 # this script aims to convert the origin format of the annotation to the format of instructional tuning
 
-# curr_dict = {'id': curr_id,
-#     'conversations': curr_final_conversation,
-#     'video': vid + '.mp4'}
-
 import json
 
 # load the raw annotation
