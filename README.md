@@ -32,7 +32,7 @@ pip install rotary-embedding-torch
 
 
 ## PAVE Weights
-We includes all the PAVE weights for different tasks in this section.
+We includes all the PAVE weights for different tasks in this section. You can find all the weights from [here](https://huggingface.co/zhuomingliu/PAVE/tree/main)
 ### 1. 3D-QA
 
 | Dataset | Base Model | Schedule | Checkpoint | ScanQA (C) | ScanQA (B-4) | ScanQA (M) | ScanQA (R) | ScanQA (EM@1) | SQA3D (EM@1)
@@ -61,7 +61,7 @@ We includes all the PAVE weights for different tasks in this section.
 
 
 ## Datasets
-We include the instructions for preparing different datasets for the PAVE training and evaluation in this section.
+We include the instructions for preparing different datasets for the PAVE training and evaluation in this section. You can find all the annotations and pre-extracted feature from [here](https://huggingface.co/datasets/zhuomingliu/PAVEDataset/tree/main)
 
 ### 1. ScanQA
 Please refer to [ScanQA_Prepare](./doc/scanqa_dataset_prep.md) for more information.
