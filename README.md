@@ -1,9 +1,31 @@
-<div align="center">
+<!-- <div align="center">
   <img src="images/github_teaser.png" width="500px"/>
 </div>
 
 
-# 🛠️ PAVE: Patching and Adapting Video Large Language Models
+# 🛠️ PAVE: Patching and Adapting Video Large Language Models -->
+
+
+<p align="center">
+  <img src="images/github_teaser.png" width="500px"/>
+</p>
+
+<h1 align="center">🛠️ PAVE: Patching and Adapting Video Large Language Models</h1>
+
+<p align="center">
+  <a href="https://arxiv.org/abs/2503.19794"><img src="https://img.shields.io/badge/arXiv-2503.19794-red"></a>
+  <a href="https://github.com/dragonlzm/PAVE"><img src="https://img.shields.io/badge/Project-Page-brightgreen"></a>
+  <a href="https://huggingface.co/papers/2503.19794"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Homepage-green"></a>
+  <a href="https://huggingface.co/zhuomingliu/PAVE"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Checkpoints-blue"></a>
+  <a href="https://huggingface.co/datasets/zhuomingliu/PAVEDataset"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-orange"></a>
+  <a href="/LICENSE"><img src="https://img.shields.io/badge/License-BSD--3--Clause-purple"></a>
+</p>
+
+<p align="center">
+  <a href="https://dragonlzm.github.io/zhuomingliu.github.io/">Zhuoming Liu</a><sup>1</sup>, <a href="https://li-yiquan.github.io/">Yiquan Li</a><sup>1</sup>, <a href="https://khoiucd.github.io/">Khoi Duc Nguyen</a><sup>1</sup>, <a href="https://yiwuzhong.notion.site/Yiwu-Zhong-b5f40832583b49d793c8edc1e060221b">Yiwu Zhong</a><sup>2</sup>, <a href="https://www.biostat.wisc.edu/~yli/">Yin Li</a><sup>2</sup>
+  <p align="center"><sup>1</sup>University of Wisconsin-Madison<sup>2</sup>The Chinese University of Hong Kong</p>
+</p>
+
 
 ## Introduction
 This code repo holds the implementation of PAVE, a framework that adapts pre-trained video large language model (Video-LLMs) to downstream tasks with side-channel signals, such as audio, depth information, exo-centric video and high frame rate videos. Our paper is accepted to CVPR2025 and an arXiv version of our paper is available [here](https://arxiv.org/abs/2503.19794).
