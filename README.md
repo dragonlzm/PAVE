@@ -91,7 +91,7 @@ pip install peft==0.10.0
 pip install rotary-embedding-torch
 
 # You may need to install following libs for evaluation
-pip install mmengine, pycocotools, pycocoevalcap, pytablewriter, hf_transfer, tenacity, sqlitedict, evaluate, sacrebleu, loguru
+pip install mmengine pycocotools pycocoevalcap pytablewriter hf_transfer tenacity sqlitedict evaluate sacrebleu loguru
 ```
 
 
@@ -228,14 +228,12 @@ Zhuoming Liu (zliu2346@wisc.edu)
 ## References
 If think our work is helpful or interesting, please consider citing our paper. Thanks!
 ```
-@misc{liu2025pavepatchingadaptingvideo,
-      title={PAVE: Patching and Adapting Video Large Language Models}, 
-      author={Zhuoming Liu and Yiquan Li and Khoi Duc Nguyen and Yiwu Zhong and Yin Li},
-      year={2025},
-      eprint={2503.19794},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2503.19794}, 
+@inproceedings{liu2025pave,
+  title={PAVE: Patching and Adapting Video Large Language Models},
+  author={Liu, Zhuoming and Li, Yiquan and Nguyen, Khoi Duc and Zhong, Yiwu and Li, Yin},
+  booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
+  pages={3306--3317},
+  year={2025}
 }
 ```
 
