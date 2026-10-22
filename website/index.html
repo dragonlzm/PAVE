@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PAVE: Patching and Adapting Video Large Language Models</title>
+  <meta name="description" content="PAVE is a lightweight framework for adapting video large language models with audio, 3D cues, multi-view video, and densely sampled frames. CVPR 2025.">
+  <meta name="theme-color" content="#65438c">
+  <link rel="canonical" href="https://dragonlzm.github.io/PAVE/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PAVE: Patching and Adapting Video Large Language Models">
+  <meta property="og:description" content="Lightweight patches. More signals. One pretrained video-language model. CVPR 2025.">
+  <meta property="og:url" content="https://dragonlzm.github.io/PAVE/">
+  <meta property="og:image" content="https://dragonlzm.github.io/PAVE/assets/images/github_teaser.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/third-party/fonts.css">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/main.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#introduction">Skip to content</a>
+<details class="section-navigation">
+  <summary>Sections</summary>
+  <nav aria-label="On this page"><p>On this page</p><ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#method">Method Overview</a></li>
+    <li><a href="#performance">Performance</a></li>
+    <li><a href="#efficiency">Efficiency</a></li>
+    <li><a href="#qualitative">Qualitative Results</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#citation">Citation</a></li>
+  </ol></nav>
+</details>
+<header class="hero">
+  <div class="container wide hero-grid">
+    <div>
+      <p class="eyebrow">CVPR 2025 · Video understanding</p>
+      <h1><span>PAVE:</span> Patching and Adapting Video Large Language Models</h1>
+      <p class="authors"><a href="https://dragonlzm.github.io/zhuomingliu.github.io/">Zhuoming Liu</a><sup>1</sup>, <a href="https://li-yiquan.github.io/">Yiquan Li</a><sup>1</sup>, <a href="https://khoiucd.github.io/">Khoi Duc Nguyen</a><sup>1</sup>, <a href="https://yiwuzhong.notion.site/Yiwu-Zhong-b5f40832583b49d793c8edc1e060221b">Yiwu Zhong</a><sup>2</sup>, <a href="https://www.biostat.wisc.edu/~yli/">Yin Li</a><sup>1</sup></p>
+      <p class="affiliations"><span><sup>1</sup> University of Wisconsin–Madison</span><span><sup>2</sup> The Chinese University of Hong Kong</span></p>
+      <p class="hero-summary">Lightweight patches extend pretrained video-language models with audio, 3D cues, additional viewpoints, and dense video frames.</p>
+      <div class="hero-links" aria-label="Project resources">
+        <a class="button primary" href="https://arxiv.org/abs/2503.19794"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/></svg>Paper</a>
+        <a class="button" href="https://github.com/dragonlzm/PAVE"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></svg>Code</a>
+        <a class="button" href="https://huggingface.co/zhuomingliu/PAVE">Checkpoints</a>
+        <a class="button" href="https://huggingface.co/datasets/zhuomingliu/PAVEDataset">Dataset</a>
+      </div>
+    </div>
+    <figure class="hero-figure">
+      <a class="hero-image" href="assets/images/github_teaser.png" target="_blank" rel="noopener"><img src="assets/images/github_teaser.png" width="960" height="576" alt="PAVE adds lightweight patches for audio, 3D information, and high-frame-rate video to a pretrained Video LLM, enabling different downstream tasks." fetchpriority="high"></a>
+      <figcaption><strong>More signals. The same backbone.</strong><br>Small, task-specific patches bring new information into the visual tokens of a pretrained video-language model.</figcaption>
+    </figure>
+  </div>
+</header>
+<main>
+<section id="introduction" class="section">
+  <div class="container">
+    <div class="section-heading"><p class="eyebrow">One framework, multiple signals</p><h2>Introduction</h2></div>
+    <div class="prose">
+      <p>Pretrained video large language models can reason about visual content, but many downstream tasks provide useful information beyond the video frames they were trained to process. Audio reveals what can be heard, depth and camera poses describe three-dimensional space, and additional viewpoints or densely sampled frames expose details that sparse observations can miss.</p>
+      <p><strong>PAVE adapts these models through lightweight patches.</strong> It brings side-channel information into the model’s existing visual tokens while preserving the backbone architecture and pretrained weights. The same design supports audio-visual question answering, 3D reasoning, multi-view video understanding, and enhanced video question answering.</p>
+    </div>
+    <div class="card-grid">
+      <article class="card"><h3>Problem</h3><p>A strong video-language backbone does not directly accept every modality or data type available in a downstream task.</p></article>
+      <article class="card"><h3>Core idea</h3><p>Use a compact cross-attention patch to align and fuse side-channel features with the model’s visual tokens.</p></article>
+      <article class="card"><h3>Scope</h3><p>Audio, 3D cues, exocentric video, and densely sampled frames extend the same pretrained video-language model.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="method" class="section tint">
+  <div class="container wide">
+    <div class="section-heading"><p class="eyebrow">Patching and adapting</p><h2>Method Overview</h2></div>
+    <div class="prose"><p>PAVE connects a video-language backbone to an encoder for the additional signal. The patch aggregates the side-channel evidence into the visual representation, so the language model can use that evidence through its existing input interface.</p></div>
+    <figure class="figure"><a href="assets/images/github_overview.png" target="_blank" rel="noopener"><img src="assets/images/github_overview.png" alt="PAVE architecture: visual tokens from key video frames attend to encoded side-channel signals before entering the pretrained language model." width="1680" height="768" loading="lazy"></a><figcaption>PAVE aligns and fuses side-channel information with the visual tokens of a pretrained video-language model. Select the figure to view it at full size.</figcaption></figure>
+    <div class="card-grid">
+      <article class="card"><h3>1. Encode the inputs</h3><p>Extract visual tokens from key video frames and encode the available side-channel signal with a suitable encoder.</p></article>
+      <article class="card"><h3>2. Align and attend</h3><p>Align the signals along time. Visual tokens act as queries; side-channel features provide the keys and values for cross-attention.</p></article>
+      <article class="card"><h3>3. Update visual tokens</h3><p>Add the patch output to the visual representation and pass the updated tokens to the language model for task-specific reasoning.</p></article>
+    </div>
+    <p class="section-note">The patch preserves the pretrained backbone weights. The released task adaptations also use LoRA; patch overhead and total trainable parameters are distinct quantities.</p>
+  </div>
+</section>
+
+<section id="performance" class="section">
+  <div class="container wide">
+    <div class="section-heading"><p class="eyebrow">Four ways to extend video understanding</p><h2>Performance</h2></div>
+    <div class="prose"><p>PAVE is evaluated with LLaVA-OneVision backbones at 0.5B and 7B scales. The results below cover the released task-specific checkpoints, with each side channel chosen to supply information relevant to the task.</p></div>
+    <figure class="figure"><a href="assets/images/performance_figure.png" target="_blank" rel="noopener"><img src="assets/images/performance_figure.png" alt="Published benchmark comparison of video-language baselines and PAVE across audio-visual QA, 3D QA, multi-view understanding, and enhanced video QA." width="5923" height="2440" loading="lazy"></a><figcaption>Benchmark comparisons from the project’s published results. The tables below report scores for the released PAVE checkpoints.</figcaption></figure>
+    <p class="section-note">Higher is better for all metrics below. Accuracy and exact match are reported in percent; CIDEr and the other captioning metrics retain the paper’s reported scale. Tables scroll horizontally on smaller screens.</p>
+
+    <div class="results-group">
+    <h3>Audio-Visual Question Answering</h3>
+    <div class="prose"><p>Audio features supplement the video frames on AVSD, AVQA, and Music-AVQA.</p></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Audio-visual question answering results">
+      <table><caption>Released audio-visual checkpoints</caption><thead><tr><th scope="col">Benchmark</th><th scope="col">Metric</th><th scope="col">PAVE 0.5B</th><th scope="col">PAVE 7B</th></tr></thead><tbody>
+        <tr><th scope="row">AVSD</th><td>CIDEr</td><td>134.5</td><td>152.9</td></tr>
+        <tr><th scope="row">AVQA</th><td>Accuracy</td><td>90.4</td><td>93.8</td></tr>
+        <tr><th scope="row">Music-AVQA · Audio</th><td>Accuracy</td><td>77.3</td><td>79.7</td></tr>
+        <tr><th scope="row">Music-AVQA · Visual</th><td>Accuracy</td><td>89.8</td><td>93.0</td></tr>
+        <tr><th scope="row">Music-AVQA · Audio-Visual</th><td>Accuracy</td><td>74.1</td><td>78.0</td></tr>
+        <tr><th scope="row">Music-AVQA · Overall</th><td>Accuracy</td><td>78.8</td><td>82.3</td></tr>
+      </tbody></table>
+    </div>
+    <p class="section-note">A separate 7B checkpoint combining audio with densely sampled frames reaches <strong>160.0 CIDEr</strong> on AVSD after two training epochs; the audio-only AVSD checkpoints above use one epoch.</p>
+
+    </div>
+    <div class="results-group">
+    <h3>3D Question Answering</h3>
+    <div class="prose"><p>Depth and camera-pose information provide spatial context for ScanQA and SQA3D.</p></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="3D question answering results">
+      <table><caption>Released 3D QA checkpoints</caption><thead><tr><th scope="col">Benchmark</th><th scope="col">Metric</th><th scope="col">PAVE 0.5B</th><th scope="col">PAVE 7B</th></tr></thead><tbody>
+        <tr><th scope="row">ScanQA</th><td>CIDEr</td><td>84.2</td><td>103.4</td></tr>
+        <tr><th scope="row">ScanQA</th><td>BLEU-4</td><td>13.1</td><td>16.0</td></tr>
+        <tr><th scope="row">ScanQA</th><td>METEOR</td><td>17.0</td><td>19.9</td></tr>
+        <tr><th scope="row">ScanQA</th><td>ROUGE-L</td><td>42.1</td><td>49.0</td></tr>
+        <tr><th scope="row">ScanQA</th><td>EM@1</td><td>23.1</td><td>29.1</td></tr>
+        <tr><th scope="row">SQA3D</th><td>EM@1</td><td>51.1</td><td>59.0</td></tr>
+      </tbody></table>
+    </div>
+    <p class="section-note">EM@1 reports standard exact match. Additional evaluation scores and settings are documented in the paper and repository.</p>
+
+    </div>
+    <div class="results-group">
+    <h3>Multi-view Video Understanding</h3>
+    <div class="prose"><p>Exocentric views complement the egocentric video when estimating a demonstrator’s proficiency on Ego-Exo4D.</p></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Multi-view video understanding results">
+      <table><caption>Ego-Exo4D demonstrator proficiency estimation</caption><thead><tr><th scope="col">Benchmark</th><th scope="col">Metric</th><th scope="col">PAVE 0.5B</th><th scope="col">PAVE 7B</th></tr></thead><tbody>
+        <tr><th scope="row">Ego-Exo4D</th><td>Accuracy</td><td>32.4</td><td>44.2</td></tr>
+      </tbody></table>
+    </div>
+
+    </div>
+    <div class="results-group">
+    <h3>Enhanced Video Question Answering</h3>
+    <div class="prose"><p>Densely sampled video features add temporal detail to the backbone’s sparse key-frame representation. PAVE improves average accuracy over the corresponding base model on VideoMME, MVBench, and MLVU.</p></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Enhanced video question answering results">
+      <table><caption>Enhanced video QA accuracy; VideoMME results without subtitles</caption><thead><tr><th scope="col">Benchmark</th><th scope="col">Split</th><th scope="col">PAVE 0.5B</th><th scope="col">PAVE 7B</th></tr></thead><tbody>
+        <tr><th scope="row">VideoMME</th><td>Short</td><td>57.8</td><td>71.1</td></tr>
+        <tr><th scope="row">VideoMME</th><td>Medium</td><td>42.7</td><td>59.4</td></tr>
+        <tr><th scope="row">VideoMME</th><td>Long</td><td>37.4</td><td>49.2</td></tr>
+        <tr><th scope="row">VideoMME</th><td>Average</td><td>46.0</td><td>59.9</td></tr>
+        <tr><th scope="row">MVBench</th><td>Average</td><td>46.6</td><td>58.0</td></tr>
+        <tr><th scope="row">MLVU</th><td>Overall</td><td>51.6</td><td>67.0</td></tr>
+      </tbody></table>
+    </div>
+    <p class="section-note">Sources: <a href="https://github.com/dragonlzm/PAVE#pave-weights">released checkpoint results</a> and <a href="https://arxiv.org/html/2503.19794v1#S4.T3">Table 3 of the paper</a>. See the paper for the complete benchmark evaluation.</p>
+    </div>
+  </div>
+</section>
+
+<section id="efficiency" class="section tint">
+  <div class="container wide">
+    <div class="section-heading"><p class="eyebrow">A small patch to a pretrained model</p><h2>Efficiency</h2></div>
+    <div class="prose"><p>The patch updates existing visual tokens rather than expanding the language model’s input with all side-channel tokens. In the illustrated 7B setting, PAVE adds approximately <strong>20 MB of patch weights</strong> and <strong>0.1 TFLOPs</strong>—about <strong>0.1%</strong> of the model’s weight footprint and reported inference computation.</p></div>
+    <figure class="figure"><a href="assets/images/params_and_flops.png" target="_blank" rel="noopener"><img src="assets/images/params_and_flops.png" alt="Efficiency comparison: PAVE patch weights occupy 20 MB, approximately 0.1 percent, and add 0.1 TFLOPs compared with 98.53 TFLOPs for the video-language backbone. LoRA weights are shown separately." width="3585" height="981" loading="lazy"></a><figcaption>Patch overhead from the project’s efficiency comparison. LoRA weights are shown separately from the PAVE patch.</figcaption></figure>
+    <p class="section-note">These figures describe the patch, not all trainable parameters. Following the paper’s accounting, FLOPs include the patch and language model and exclude the visual encoder and side-channel encoder. Costs depend on the task and input configuration; see <a href="https://arxiv.org/html/2503.19794v1#A2.SS5">Appendix B.5</a> for the measurement assumptions.</p>
+  </div>
+</section>
+
+<section id="qualitative" class="section">
+  <div class="container">
+    <div class="section-heading"><p class="eyebrow">Seeing more of the story</p><h2>Qualitative Results</h2></div>
+    <p>Densely sampled frames help PAVE recover details that sparse visual inputs can miss. These examples from the paper compare PAVE with zero-shot LLaVA-OneVision on VideoMME and MVBench.</p>
+    <figure class="figure"><a href="assets/images/qualitative-results.png" target="_blank" rel="noopener"><img src="assets/images/qualitative-results.png" alt="Three published video question-answering examples. PAVE matches the reference answer for a training schedule question, a narrative reasoning question, and an object-tracking task, while zero-shot LLaVA-OneVision gives different answers." width="900" height="1200" loading="lazy"></a><figcaption>Examples from <a href="https://arxiv.org/html/2503.19794v1#A3">Appendix C, Figure 5</a>. GT denotes the ground-truth answer. Select the figure to read the questions and answers at full size.</figcaption></figure>
+  </div>
+</section>
+
+<section id="resources" class="section tint">
+  <div class="container">
+    <div class="section-heading"><p class="eyebrow">Explore and reproduce</p><h2>Resources</h2></div>
+    <div class="resource-grid">
+      <article class="resource-card"><h3>Paper</h3><p>Read the method, experiments, and supplementary analysis.</p><p><a href="https://arxiv.org/abs/2503.19794">arXiv</a> · <a href="https://arxiv.org/pdf/2503.19794">PDF</a> · <a href="https://huggingface.co/papers/2503.19794">Hugging Face paper</a></p></article>
+      <article class="resource-card"><h3>Code</h3><p>Implementation, environment setup, training scripts, and evaluation instructions.</p><p><a href="https://github.com/dragonlzm/PAVE">GitHub repository</a> · <a href="https://github.com/dragonlzm/PAVE#install">Installation</a></p></article>
+      <article class="resource-card"><h3>Checkpoints</h3><p>Released 0.5B and 7B task adaptations, including multiple side channels.</p><p><a href="https://huggingface.co/zhuomingliu/PAVE">Download model weights</a></p></article>
+      <article class="resource-card"><h3>Datasets</h3><p>Annotations, pre-extracted features, and preparation guides for the evaluated tasks.</p><p><a href="https://huggingface.co/datasets/zhuomingliu/PAVEDataset">Annotations and features</a> · <a href="https://huggingface.co/datasets/zhuomingliu/PAVE_others">Video resources</a> · <a href="https://github.com/dragonlzm/PAVE#datasets">Preparation guides</a></p></article>
+      <article class="resource-card"><h3>Run the demo</h3><p>Use the Python demo and downloadable samples to try PAVE locally.</p><p><a href="https://github.com/dragonlzm/PAVE/blob/main/demo_pave.py">Demo script</a> · <a href="https://huggingface.co/datasets/zhuomingliu/PAVEDataset/blob/main/demo_samples.zip">Sample data</a></p></article>
+      <article class="resource-card"><h3>Contact</h3><p>Questions about the research or use of PAVE can be directed to Zhuoming Liu.</p><p><a href="mailto:zliu2346@wisc.edu">zliu2346@wisc.edu</a></p></article>
+    </div>
+    <p class="section-note">The repository specifies academic use only; contact the authors for commercial use.</p>
+  </div>
+</section>
+
+<section id="citation" class="section">
+  <div class="container">
+    <div class="section-heading"><p class="eyebrow">CVPR 2025</p><h2>Citation</h2></div>
+    <p>If PAVE is useful for your research, please cite our paper.</p>
+    <div class="citation-wrap"><div class="citation-toolbar"><span id="copy-status" role="status" aria-live="polite"></span><button id="copy-citation" class="button" type="button" hidden>Copy BibTeX</button></div>
+    <pre><code id="bibtex">@inproceedings{liu2025pave,
+  title={PAVE: Patching and Adapting Video Large Language Models},
+  author={Liu, Zhuoming and Li, Yiquan and Nguyen, Khoi Duc and Zhong, Yiwu and Li, Yin},
+  booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
+  pages={3306--3317},
+  year={2025}
+}</code></pre></div>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <p>PAVE · CVPR 2025</p>
+  <p>Page inspired by <a href="https://dragonlzm.github.io/MaLoW/">MaLoW</a> and <a href="https://dragonlzm.github.io/DRIFT/">DRIFT</a>, based on the <a href="https://shikun.io/projects/clarity">Clarity Template</a> by <a href="https://shikun.io/">Shikun Liu</a>.</p>
+  <p><a href="https://github.com/dragonlzm/PAVE/blob/main/website/THIRD_PARTY_NOTICES.md">Website credits</a></p>
+</footer>
+</body>
+</html>
