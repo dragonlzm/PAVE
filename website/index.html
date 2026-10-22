@@ -37,7 +37,7 @@
     <div>
       <p class="eyebrow">CVPR 2025 · Video understanding</p>
       <h1><span>PAVE:</span> Patching and Adapting Video Large Language Models</h1>
-      <p class="authors"><a href="https://dragonlzm.github.io/zhuomingliu.github.io/">Zhuoming Liu</a><sup>1</sup>, <a href="https://li-yiquan.github.io/">Yiquan Li</a><sup>1</sup>, <a href="https://khoiucd.github.io/">Khoi Duc Nguyen</a><sup>1</sup>, <a href="https://yiwuzhong.notion.site/Yiwu-Zhong-b5f40832583b49d793c8edc1e060221b">Yiwu Zhong</a><sup>2</sup>, <a href="https://www.biostat.wisc.edu/~yli/">Yin Li</a><sup>1</sup></p>
+      <p class="authors"><a href="https://dragonlzm.github.io/zhuomingliu.github.io/">Zhuoming Liu</a><sup>1</sup>, <a href="https://li-yiquan.github.io/">Yiquan Li</a><sup>1</sup>, <a href="https://khoiucd.github.io/">Khoi Duc Nguyen</a><sup>1</sup>, <a href="https://yiwuzhong.notion.site/Yiwu-Zhong-b5f40832583b49d793c8edc1e060221b">Yiwu Zhong</a><sup>2</sup>, <a href="https://scholar.google.com/citations?user=_y-8nrcAAAAJ">Yin Li</a><sup>1</sup></p>
       <p class="affiliations"><span><sup>1</sup> University of Wisconsin–Madison</span><span><sup>2</sup> The Chinese University of Hong Kong</span></p>
       <p class="hero-summary">Lightweight patches extend pretrained video-language models with audio, 3D cues, additional viewpoints, and dense video frames.</p>
       <div class="hero-links" aria-label="Project resources">
@@ -86,38 +86,230 @@
 <section id="performance" class="section">
   <div class="container wide">
     <div class="section-heading"><p class="eyebrow">Four ways to extend video understanding</p><h2>Performance</h2></div>
-    <div class="prose"><p>PAVE is evaluated with LLaVA-OneVision backbones at 0.5B and 7B scales. The results below cover the released task-specific checkpoints, with each side channel chosen to supply information relevant to the task.</p></div>
-    <figure class="figure"><a href="assets/images/performance_figure.png" target="_blank" rel="noopener"><img src="assets/images/performance_figure.png" alt="Published benchmark comparison of video-language baselines and PAVE across audio-visual QA, 3D QA, multi-view understanding, and enhanced video QA." width="5923" height="2440" loading="lazy"></a><figcaption>Benchmark comparisons from the project’s published results. The tables below report scores for the released PAVE checkpoints.</figcaption></figure>
-    <p class="section-note">Higher is better for all metrics below. Accuracy and exact match are reported in percent; CIDEr and the other captioning metrics retain the paper’s reported scale. Tables scroll horizontally on smaller screens.</p>
+    <div class="prose"><p>PAVE is evaluated with LLaVA-OneVision backbones at 0.5B and 7B scales. The tables compare PAVE with the paper’s zero-shot, fine-tuned, and task-specific baselines, with each side channel chosen to supply information relevant to the task.</p></div>
+    <figure class="figure"><a href="assets/images/performance_figure.png" target="_blank" rel="noopener"><img src="assets/images/performance_figure.png" alt="Published benchmark comparison of video-language baselines and PAVE across audio-visual QA, 3D QA, multi-view understanding, and enhanced video QA." width="5923" height="2440" loading="lazy"></a><figcaption>Benchmark comparisons from the project’s published results. The tables below compare PAVE and the baselines reported in the paper.</figcaption></figure>
+    <p class="section-note">Higher is better for all metrics below. Accuracy and exact match are reported in percent; CIDEr and the other captioning metrics retain the paper’s reported scale. <strong>Bold</strong> marks the best score in each column; shaded rows identify PAVE. LLaVA-OV denotes LLaVA-OneVision, FT denotes task-specific fine-tuning, and — means not reported. Tables scroll horizontally on smaller screens.</p>
 
     <div class="results-group">
     <h3>Audio-Visual Question Answering</h3>
     <div class="prose"><p>Audio features supplement the video frames on AVSD, AVQA, and Music-AVQA.</p></div>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Audio-visual question answering results">
-      <table><caption>Released audio-visual checkpoints</caption><thead><tr><th scope="col">Benchmark</th><th scope="col">Metric</th><th scope="col">PAVE 0.5B</th><th scope="col">PAVE 7B</th></tr></thead><tbody>
-        <tr><th scope="row">AVSD</th><td>CIDEr</td><td>134.5</td><td>152.9</td></tr>
-        <tr><th scope="row">AVQA</th><td>Accuracy</td><td>90.4</td><td>93.8</td></tr>
-        <tr><th scope="row">Music-AVQA · Audio</th><td>Accuracy</td><td>77.3</td><td>79.7</td></tr>
-        <tr><th scope="row">Music-AVQA · Visual</th><td>Accuracy</td><td>89.8</td><td>93.0</td></tr>
-        <tr><th scope="row">Music-AVQA · Audio-Visual</th><td>Accuracy</td><td>74.1</td><td>78.0</td></tr>
-        <tr><th scope="row">Music-AVQA · Overall</th><td>Accuracy</td><td>78.8</td><td>82.3</td></tr>
-      </tbody></table>
+      <table class="comparison-table"><caption><a href="https://arxiv.org/html/2503.19794v1#S4.T1">Audio-visual QA · paper Tables 1 and 7</a></caption><thead><tr><th scope="col">Method</th><th scope="col">AVSD<br><small>CIDEr</small></th><th scope="col">AVQA<br><small>Acc.</small></th><th scope="col">Music-AVQA<br><small>Audio</small></th><th scope="col">Music-AVQA<br><small>Visual</small></th><th scope="col">Music-AVQA<br><small>Audio-Visual</small></th><th scope="col">Music-AVQA<br><small>Overall</small></th></tr></thead>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="7">Zero-shot models</th></tr>
+      <tr><th scope="row">CAT-7B</th>
+      <td>79.0</td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td>48.6</td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-0.5B</th>
+      <td>65.1</td>
+      <td>77.4</td>
+      <td>60.0</td>
+      <td>57.1</td>
+      <td>48.5</td>
+      <td>52.8</td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-7B</th>
+      <td>70.6</td>
+      <td>85.6</td>
+      <td>68.8</td>
+      <td>70.6</td>
+      <td>52.8</td>
+      <td>60.4</td>
+      </tr>
+      </tbody>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="7">Task-specific models</th></tr>
+      <tr><th scope="row">MTN</th>
+      <td>98.5</td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      </tr>
+      <tr><th scope="row">COST</th>
+      <td>108.5</td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      </tr>
+      <tr><th scope="row">VALOR</th>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td>78.9</td>
+      </tr>
+      <tr><th scope="row">VAST</th>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td>80.7</td>
+      </tr>
+      <tr><th scope="row">PSTP-Net</th>
+      <td><span aria-label="Not reported">—</span></td>
+      <td>90.2</td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      <td><span aria-label="Not reported">—</span></td>
+      </tr>
+      <tr><th scope="row">CAT-7B-FT</th>
+      <td><span aria-label="Not reported">—</span></td>
+      <td>92.0</td>
+      <td><strong>84.9</strong></td>
+      <td>86.1</td>
+      <td><strong>83.2</strong></td>
+      <td><strong>84.3</strong></td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-0.5B-FT</th>
+      <td>117.6</td>
+      <td>86.4</td>
+      <td>69.6</td>
+      <td>76.3</td>
+      <td>62.8</td>
+      <td>67.6</td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-7B-FT</th>
+      <td>124.9</td>
+      <td>90.8</td>
+      <td>75.4</td>
+      <td>89.3</td>
+      <td>72.3</td>
+      <td>77.4</td>
+      </tr>
+      </tbody>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="7">PAVE · audio side channel</th></tr>
+      <tr class="ours"><th scope="row">PAVE-0.5B</th>
+      <td>134.5</td>
+      <td>90.4</td>
+      <td>77.3</td>
+      <td>89.8</td>
+      <td>74.1</td>
+      <td>78.8</td>
+      </tr>
+      <tr class="ours"><th scope="row">PAVE-7B</th>
+      <td><strong>152.9</strong></td>
+      <td><strong>93.8</strong></td>
+      <td>79.7</td>
+      <td><strong>93.0</strong></td>
+      <td>78.0</td>
+      <td>82.3</td>
+      </tr>
+      </tbody>
+      </table>
     </div>
-    <p class="section-note">A separate 7B checkpoint combining audio with densely sampled frames reaches <strong>160.0 CIDEr</strong> on AVSD after two training epochs; the audio-only AVSD checkpoints above use one epoch.</p>
+    <p class="section-note">A separate 7B checkpoint combining audio with densely sampled frames reaches <strong>160.0 CIDEr</strong> on AVSD after two training epochs.</p>
 
     </div>
     <div class="results-group">
     <h3>3D Question Answering</h3>
     <div class="prose"><p>Depth and camera-pose information provide spatial context for ScanQA and SQA3D.</p></div>
     <div class="table-wrap" tabindex="0" role="region" aria-label="3D question answering results">
-      <table><caption>Released 3D QA checkpoints</caption><thead><tr><th scope="col">Benchmark</th><th scope="col">Metric</th><th scope="col">PAVE 0.5B</th><th scope="col">PAVE 7B</th></tr></thead><tbody>
-        <tr><th scope="row">ScanQA</th><td>CIDEr</td><td>84.2</td><td>103.4</td></tr>
-        <tr><th scope="row">ScanQA</th><td>BLEU-4</td><td>13.1</td><td>16.0</td></tr>
-        <tr><th scope="row">ScanQA</th><td>METEOR</td><td>17.0</td><td>19.9</td></tr>
-        <tr><th scope="row">ScanQA</th><td>ROUGE-L</td><td>42.1</td><td>49.0</td></tr>
-        <tr><th scope="row">ScanQA</th><td>EM@1</td><td>23.1</td><td>29.1</td></tr>
-        <tr><th scope="row">SQA3D</th><td>EM@1</td><td>51.1</td><td>59.0</td></tr>
-      </tbody></table>
+      <table class="comparison-table"><caption><a href="https://arxiv.org/html/2503.19794v1#S4.T2">3D QA · paper Tables 2 and 8</a></caption><thead><tr><th scope="col">Method</th><th scope="col">ScanQA<br><small>CIDEr</small></th><th scope="col">ScanQA<br><small>BLEU-4</small></th><th scope="col">ScanQA<br><small>METEOR</small></th><th scope="col">ScanQA<br><small>ROUGE-L</small></th><th scope="col">ScanQA<br><small>EM@1</small></th><th scope="col">SQA3D<br><small>EM@1</small></th></tr></thead>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="7">Zero-shot models</th></tr>
+      <tr><th scope="row">VideoChat2-7B</th>
+      <td>49.2</td>
+      <td>9.6</td>
+      <td>9.5</td>
+      <td>28.2</td>
+      <td>19.2</td>
+      <td>37.3</td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-0.5B</th>
+      <td>17.2</td>
+      <td>1.2</td>
+      <td>13.7</td>
+      <td>18.4</td>
+      <td>0.2</td>
+      <td>0.8</td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-7B</th>
+      <td>91.0</td>
+      <td>5.3</td>
+      <td>18.2</td>
+      <td>45.9</td>
+      <td>26.7</td>
+      <td>8.3</td>
+      </tr>
+      </tbody>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="7">Task-specific models</th></tr>
+      <tr><th scope="row">3D-LLM-7B</th>
+      <td>74.5</td>
+      <td>12.9</td>
+      <td>15.1</td>
+      <td>37.5</td>
+      <td>21.2</td>
+      <td>49.79</td>
+      </tr>
+      <tr><th scope="row">LEO-7B</th>
+      <td>101.4</td>
+      <td>13.2</td>
+      <td>20.0</td>
+      <td>49.2</td>
+      <td>24.5</td>
+      <td>50.0</td>
+      </tr>
+      <tr><th scope="row">Scene-LLM-7B</th>
+      <td>80.0</td>
+      <td>12.0</td>
+      <td>16.6</td>
+      <td>40.0</td>
+      <td>27.2</td>
+      <td>54.2</td>
+      </tr>
+      <tr><th scope="row">LLaVA-3D-7B</th>
+      <td>91.7</td>
+      <td>14.5</td>
+      <td><strong>20.7</strong></td>
+      <td><strong>50.1</strong></td>
+      <td>27.0</td>
+      <td>55.6</td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-0.5B-FT</th>
+      <td>70.5</td>
+      <td>6.5</td>
+      <td>14.3</td>
+      <td>36.9</td>
+      <td>20.5</td>
+      <td>44.1</td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-7B-FT</th>
+      <td>95.1</td>
+      <td>13.5</td>
+      <td>19.1</td>
+      <td>47.4</td>
+      <td>27.4</td>
+      <td>55.8</td>
+      </tr>
+      </tbody>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="7">PAVE · 3D side channel</th></tr>
+      <tr class="ours"><th scope="row">PAVE-0.5B</th>
+      <td>84.2</td>
+      <td>13.1</td>
+      <td>17.0</td>
+      <td>42.1</td>
+      <td>23.1</td>
+      <td>51.1</td>
+      </tr>
+      <tr class="ours"><th scope="row">PAVE-7B</th>
+      <td><strong>103.4</strong></td>
+      <td><strong>16.0</strong></td>
+      <td>19.9</td>
+      <td>49.0</td>
+      <td><strong>29.1</strong></td>
+      <td><strong>59.0</strong></td>
+      </tr>
+      </tbody>
+      </table>
     </div>
     <p class="section-note">EM@1 reports standard exact match. Additional evaluation scores and settings are documented in the paper and repository.</p>
 
@@ -126,26 +318,83 @@
     <h3>Multi-view Video Understanding</h3>
     <div class="prose"><p>Exocentric views complement the egocentric video when estimating a demonstrator’s proficiency on Ego-Exo4D.</p></div>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Multi-view video understanding results">
-      <table><caption>Ego-Exo4D demonstrator proficiency estimation</caption><thead><tr><th scope="col">Benchmark</th><th scope="col">Metric</th><th scope="col">PAVE 0.5B</th><th scope="col">PAVE 7B</th></tr></thead><tbody>
-        <tr><th scope="row">Ego-Exo4D</th><td>Accuracy</td><td>32.4</td><td>44.2</td></tr>
-      </tbody></table>
+      <table class="comparison-table compact-table"><caption><a href="https://arxiv.org/html/2503.19794v1#A1.T10">Ego-Exo4D demonstrator proficiency · paper Table 10</a></caption><thead><tr><th scope="col">Method</th><th scope="col">Accuracy (%)</th></tr></thead>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="2">Zero-shot models</th></tr>
+      <tr><th scope="row">LLaVA-OV-0.5B</th>
+      <td>23.6</td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-7B</th>
+      <td>23.6</td>
+      </tr>
+      </tbody>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="2">Task-specific models</th></tr>
+      <tr><th scope="row">LLaVA-OV-0.5B-FT</th>
+      <td>28.2</td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-7B-FT</th>
+      <td>29.8</td>
+      </tr>
+      <tr><th scope="row">TimeSFormer (Ego + Exo)*</th>
+      <td>43.7</td>
+      </tr>
+      </tbody>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="2">PAVE · exocentric video side channel</th></tr>
+      <tr class="ours"><th scope="row">PAVE-0.5B</th>
+      <td>32.4</td>
+      </tr>
+      <tr class="ours"><th scope="row">PAVE-7B</th>
+      <td><strong>44.2</strong></td>
+      </tr>
+      </tbody>
+      </table>
     </div>
+    <p class="section-note">* TimeSFormer may use more training data than PAVE because some videos were unavailable to the authors.</p>
 
     </div>
     <div class="results-group">
     <h3>Enhanced Video Question Answering</h3>
     <div class="prose"><p>Densely sampled video features add temporal detail to the backbone’s sparse key-frame representation. PAVE improves average accuracy over the corresponding base model on VideoMME, MVBench, and MLVU.</p></div>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Enhanced video question answering results">
-      <table><caption>Enhanced video QA accuracy; VideoMME results without subtitles</caption><thead><tr><th scope="col">Benchmark</th><th scope="col">Split</th><th scope="col">PAVE 0.5B</th><th scope="col">PAVE 7B</th></tr></thead><tbody>
-        <tr><th scope="row">VideoMME</th><td>Short</td><td>57.8</td><td>71.1</td></tr>
-        <tr><th scope="row">VideoMME</th><td>Medium</td><td>42.7</td><td>59.4</td></tr>
-        <tr><th scope="row">VideoMME</th><td>Long</td><td>37.4</td><td>49.2</td></tr>
-        <tr><th scope="row">VideoMME</th><td>Average</td><td>46.0</td><td>59.9</td></tr>
-        <tr><th scope="row">MVBench</th><td>Average</td><td>46.6</td><td>58.0</td></tr>
-        <tr><th scope="row">MLVU</th><td>Overall</td><td>51.6</td><td>67.0</td></tr>
-      </tbody></table>
+      <table class="comparison-table"><caption><a href="https://arxiv.org/html/2503.19794v1#S4.T3">Enhanced video QA · paper Table 3 · VideoMME without subtitles</a></caption><thead><tr><th scope="col">Method</th><th scope="col">VideoMME<br><small>Short</small></th><th scope="col">VideoMME<br><small>Medium</small></th><th scope="col">VideoMME<br><small>Long</small></th><th scope="col">VideoMME<br><small>Average</small></th><th scope="col">MVBench<br><small>Average</small></th><th scope="col">MLVU<br><small>Overall</small></th></tr></thead>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="7">Base models</th></tr>
+      <tr><th scope="row">LLaVA-OV-0.5B</th>
+      <td>53.4</td>
+      <td>41.2</td>
+      <td>37.3</td>
+      <td>44.0</td>
+      <td>45.5</td>
+      <td>50.3</td>
+      </tr>
+      <tr><th scope="row">LLaVA-OV-7B</th>
+      <td>70.1</td>
+      <td>56.6</td>
+      <td>48.9</td>
+      <td>58.2</td>
+      <td>56.7</td>
+      <td>64.7</td>
+      </tr>
+      </tbody>
+      <tbody><tr class="table-group"><th scope="rowgroup" colspan="7">PAVE · dense video side channel</th></tr>
+      <tr class="ours"><th scope="row">PAVE-0.5B</th>
+      <td>57.8</td>
+      <td>42.7</td>
+      <td>37.4</td>
+      <td>46.0</td>
+      <td>46.6</td>
+      <td>51.6</td>
+      </tr>
+      <tr class="ours"><th scope="row">PAVE-7B</th>
+      <td><strong>71.1</strong></td>
+      <td><strong>59.4</strong></td>
+      <td><strong>49.2</strong></td>
+      <td><strong>59.9</strong></td>
+      <td><strong>58.0</strong></td>
+      <td><strong>67.0</strong></td>
+      </tr>
+      </tbody>
+      </table>
     </div>
-    <p class="section-note">Sources: <a href="https://github.com/dragonlzm/PAVE#pave-weights">released checkpoint results</a> and <a href="https://arxiv.org/html/2503.19794v1#S4.T3">Table 3 of the paper</a>. See the paper for the complete benchmark evaluation.</p>
+    <p class="section-note">See the paper for the complete benchmark evaluation.</p>
     </div>
   </div>
 </section>
@@ -155,7 +404,7 @@
     <div class="section-heading"><p class="eyebrow">A small patch to a pretrained model</p><h2>Efficiency</h2></div>
     <div class="prose"><p>The patch updates existing visual tokens rather than expanding the language model’s input with all side-channel tokens. In the illustrated 7B setting, PAVE adds approximately <strong>20 MB of patch weights</strong> and <strong>0.1 TFLOPs</strong>—about <strong>0.1%</strong> of the model’s weight footprint and reported inference computation.</p></div>
     <figure class="figure"><a href="assets/images/params_and_flops.png" target="_blank" rel="noopener"><img src="assets/images/params_and_flops.png" alt="Efficiency comparison: PAVE patch weights occupy 20 MB, approximately 0.1 percent, and add 0.1 TFLOPs compared with 98.53 TFLOPs for the video-language backbone. LoRA weights are shown separately." width="3585" height="981" loading="lazy"></a><figcaption>Patch overhead from the project’s efficiency comparison. LoRA weights are shown separately from the PAVE patch.</figcaption></figure>
-    <p class="section-note">These figures describe the patch, not all trainable parameters. Following the paper’s accounting, FLOPs include the patch and language model and exclude the visual encoder and side-channel encoder. Costs depend on the task and input configuration; see <a href="https://arxiv.org/html/2503.19794v1#A2.SS5">Appendix B.5</a> for the measurement assumptions.</p>
+    <!-- <p class="section-note">These figures describe the patch, not all trainable parameters. Following the paper’s accounting, FLOPs include the patch and language model and exclude the visual encoder and side-channel encoder. Costs depend on the task and input configuration; see <a href="https://arxiv.org/html/2503.19794v1#A2.SS5">Appendix B.5</a> for the measurement assumptions.</p> -->
   </div>
 </section>
 

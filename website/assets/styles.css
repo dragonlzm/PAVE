@@ -68,6 +68,19 @@ tbody tr:hover{background:#faf7fd}
 td:not(:first-child){white-space:nowrap}
 table a{text-decoration:none}
 table a:hover{text-decoration:underline}
+.comparison-table{min-width:920px;table-layout:fixed}
+.comparison-table.compact-table{min-width:0;table-layout:auto}
+.comparison-table th:first-child{width:220px;min-width:220px}
+.comparison-table.compact-table th:first-child{width:auto;min-width:205px}
+.comparison-table thead th:not(:first-child),.comparison-table td{text-align:right}
+.comparison-table thead small{display:block;font-size:11px;font-weight:400;white-space:nowrap;margin-top:3px}
+.comparison-table thead th:first-child,.comparison-table tbody th[scope="row"]{position:sticky;left:0;z-index:1;background:#fff;border-right:1px solid var(--line)}
+.comparison-table thead th:first-child{background:var(--panel)}
+.comparison-table .table-group th{background:var(--wash);font-size:12px;font-weight:600;color:var(--muted);padding-block:10px;border-top:1px solid var(--line)}
+.comparison-table .ours>*{background:var(--panel)}
+.comparison-table .ours th[scope="row"]{background:var(--panel);font-weight:600;color:var(--accent-dark)}
+.comparison-table tbody tr:last-child>*{border-bottom:1px solid var(--line)}
+.comparison-table tbody:last-child tr:last-child>*{border-bottom:0}
 .section-note{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:24px}
 .results-group{max-width:1000px;margin:38px auto 0}
 .results-group .prose{max-width:none;font-size:17px}
