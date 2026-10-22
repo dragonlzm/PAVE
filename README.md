@@ -14,7 +14,7 @@
 
 <p align="center">
   <a href="https://arxiv.org/abs/2503.19794"><img src="https://img.shields.io/badge/arXiv-2503.19794-red"></a>
-  <a href="https://github.com/dragonlzm/PAVE"><img src="https://img.shields.io/badge/Project-Page-brightgreen"></a>
+  <a href="https://dragonlzm.github.io/PAVE/"><img src="https://img.shields.io/badge/Project-Page-brightgreen"></a>
   <a href="https://huggingface.co/papers/2503.19794"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Homepage-purple"></a>
   <a href="https://huggingface.co/zhuomingliu/PAVE"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Checkpoints-blue"></a>
   <a href="https://huggingface.co/datasets/zhuomingliu/PAVEDataset"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-orange"></a>
